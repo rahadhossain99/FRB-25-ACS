@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html lang="bn" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HSC 2025 সিলেবাস ও রিসোর্স পোর্টাল</title>
+    <!-- Tailwind CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <!-- Google Fonts: Hind Siliguri & Poppins -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.2/css/all.min.css">
+    <!-- Animate.css -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+
+    <style>
+        :root {
+            --primary-hue: 225; /* Blue */
+            --secondary-hue: 175; /* Teal */
+            --accent-hue: 255; /* Indigo */
+            --bg-light: #f9faff; --bg-dark: #10131f;
+            --text-light: #e4e8f3; --text-dark: #181c33;
+            --border-light: hsl(var(--primary-hue), 50%, 88%); --border-dark: hsl(var(--primary-hue), 25%, 28%);
+            --card-bg-light: rgba(255, 255, 255, 0.97); --card-bg-dark: rgba(26, 30, 51, 0.94);
+            --sidebar-bg-light: linear-gradient(180deg, hsl(var(--accent-hue), 65%, 58%), hsl(var(--primary-hue), 75%, 68%));
+            --sidebar-bg-dark: linear-gradient(180deg, hsl(var(--primary-hue), 38%, 28%), hsl(var(--primary-hue), 42%, 22%));
+            --sidebar-text-light: #ffffff; --sidebar-text-dark: var(--text-light);
+            --sidebar-hover-light: hsla(var(--primary-hue), 85%, 72%, 0.95); --sidebar-hover-dark: hsl(var(--primary-hue), 35%, 35%);
+            --success-light: hsl(145, 60%, 40%); --success-dark: hsl(145, 55%, 65%);
+            --danger-light: hsl(0, 70%, 48%); --danger-dark: hsl(0, 70%, 68%);
+            --warning-light: hsl(45, 95%, 48%); --warning-dark: hsl(45, 85%, 62%);
+            --mobile-header-height: 60px; --desktop-header-height: 68px;
+        }
+        html { font-size: 16px; scroll-behavior: smooth; scroll-padding-top: calc(var(--desktop-header-height) + 1rem); }
+        html.dark { color-scheme: dark; }
+        body { font-family: 'Hind Siliguri', 'Poppins', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif; background-color: var(--bg-light); color: var(--text-dark); line-height: 1.75; min-height: 100vh; transition: background-color 0.3s ease, color 0.3s ease; overflow-x: hidden; }
+        html.dark body { background-color: var(--bg-dark); color: var(--text-light); }
+        .font-primary { font-family: 'Poppins', 'Hind Siliguri', sans-serif; } .font-bangla { font-family: 'Hind Siliguri', sans-serif; }
+        /* Glassmorphism */
+        .glass-bg { background-color: var(--card-bg-light); border: 1px solid var(--border-light); box-shadow: 0 5px 25px rgba(0,0,0,0.07); transition: background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease; }
+        @supports (backdrop-filter: blur(20px)) or (-webkit-backdrop-filter: blur(20px)) { .glass-bg { backdrop-filter: saturate(180%) blur(20px); -webkit-backdrop-filter: saturate(180%) blur(20px); } }
+        html.dark .glass-bg { background-color: var(--card-bg-dark); border-color: var(--border-dark); box-shadow: 0 7px 30px rgba(0,0,0,0.3); }
+        /* Sidebar Styles */
+        .sidebar { background: var(--sidebar-bg-light); color: var(--sidebar-text-light); transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1), width 0.35s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.3s ease; will-change: transform, width, opacity; height: 100vh; position: fixed; top: 0; left: 0; z-index: 40; display: flex; flex-direction: column; overflow: hidden; }
+        .sidebar-header { flex-shrink: 0; height: var(--desktop-header-height); padding: 0 1rem; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid rgba(255,255,255,0.15); cursor: pointer; }
+        .sidebar nav { flex-grow: 1; overflow-y: auto; padding: 1rem 0.5rem; scrollbar-width: thin; scrollbar-color: rgba(255,255,255,0.3) transparent; }
+        .sidebar-footer { flex-shrink: 0; padding: 0.75rem; border-top: 1px solid rgba(255,255,255,0.1); }
+        html.dark .sidebar { background: var(--sidebar-bg-dark); color: var(--sidebar-text-dark); border-right: 1px solid var(--border-dark); }
+        html.dark .sidebar-header { border-bottom-color: rgba(255,255,255,0.1); }
+        html.dark .sidebar nav { scrollbar-color: rgba(200,200,200,0.25) transparent; }
+        .sidebar nav ul { display: flex; flex-direction: column; gap: 0.25rem; }
+        .sidebar nav ul li a { padding: 0.75rem 1rem; transition: all 0.25s ease; border-radius: 8px; display: flex; align-items: center; margin: 0 0.25rem; }
+        .sidebar nav ul li a:hover, .sidebar nav ul li.active a { background-color: var(--sidebar-hover-light); color: white !important; transform: translateX(5px); box-shadow: 0 4px 12px rgba(0,0,0,0.12); }
+        html.dark .sidebar nav ul li a:hover, html.dark .sidebar nav ul li.active a { background-color: var(--sidebar-hover-dark); color: var(--text-light) !important; }
+        .sidebar-mobile-closed { transform: translateX(-100%); opacity: 0; } .sidebar-mobile-open { transform: translateX(0); width: 80%; max-width: 300px; opacity: 1; }
+        @media (min-width: 1024px) { .sidebar { width: 18rem; transform: translateX(0); opacity: 1; } .sidebar-desktop-closed { transform: translateX(-18rem); width: 18rem; opacity: 1; } .main-content-expanded { margin-left: 18rem; } .main-content-collapsed { margin-left: 0 !important; } }
+        /* Main Content */
+        .main-content { transition: margin-left 0.35s cubic-bezier(0.4, 0, 0.2, 1); padding-top: calc(var(--mobile-header-height) + 1.25rem); min-height: calc(100vh - var(--mobile-header-height)); display: flex; flex-direction: column; }
+        @media (min-width: 1024px) { .main-content { padding-top: calc(var(--desktop-header-height) + 1.75rem); min-height: calc(100vh - var(--desktop-header-height)); } }
+        /* Header */
+        .main-header { position: sticky; top: 0; z-index: 30; height: var(--mobile-header-height); padding: 0 1rem; transition: all 0.3s ease; display: flex; align-items: center; justify-content: space-between; gap: 0.75rem; }
+        @media (min-width: 1024px) { .main-header { height: var(--desktop-header-height); padding: 0 1.5rem; } }
+        @media (max-width: 640px) { .main-header { padding: 0 0.75rem; } }
+        /* User Profile Section */
+        .user-profile { display: flex; align-items: center; gap: 0.75rem; margin-left: auto; }
+        .user-avatar { width: 38px; height: 38px; border-radius: 50%; background: linear-gradient(135deg, hsl(var(--primary-hue), 70%, 65%), hsl(var(--accent-hue), 65%, 60%)); display: flex; align-items: center; justify-content: center; color: white; font-size: 1.1rem; flex-shrink: 0; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+        .user-info { display: flex; flex-direction: column; }
+        .user-name { font-weight: 600; font-size: 0.9rem; color: var(--text-dark); white-space: nowrap; }
+        .user-role { font-size: 0.75rem; color: #6b7280; }
+        html.dark .user-name { color: var(--text-light); } html.dark .user-role { color: #a0a7b7; }
+        /* View Mode Toggle Styles */
+        .view-mode-toggle { background-color: var(--bg-light); border: 1px solid var(--border-light); padding: 3px; border-radius: 8px; display: flex; align-items: center; gap: 3px; box-shadow: inset 0 1px 2px rgba(0,0,0,0.05); }
+        html.dark .view-mode-toggle { background-color: var(--bg-dark); border-color: var(--border-dark); box-shadow: inset 0 1px 2px rgba(0,0,0,0.2); }
+        .view-mode-toggle .btn { padding: 0.35rem 0.75rem; font-size: 0.8rem; font-weight: 500; border-radius: 6px; transition: all 0.2s ease; cursor: pointer; border: none; background-color: transparent; color: var(--text-dark); min-height: 0; height: 30px; }
+        html.dark .view-mode-toggle .btn { color: var(--text-light); }
+        .view-mode-toggle .btn:hover:not(.active) { background-color: hsla(var(--primary-hue), 50%, 50%, 0.08); }
+        html.dark .view-mode-toggle .btn:hover:not(.active) { background-color: hsla(var(--primary-hue), 30%, 80%, 0.1); }
+        .view-mode-toggle .btn.active { background: linear-gradient(135deg, hsl(var(--primary-hue), 65%, 60%), hsl(var(--accent-hue), 60%, 65%)); color: white; box-shadow: 0 2px 5px rgba(0,0,0,0.1); font-weight: 600; }
+        html.dark .view-mode-toggle .btn.active { background: linear-gradient(135deg, hsl(var(--primary-hue), 50%, 50%), hsl(var(--accent-hue), 45%, 55%)); }
+        .header-actions .p-2 { width: 38px; height: 38px; }
+        /* Scrollbar */
+        ::-webkit-scrollbar { width: 8px; height: 8px; background: transparent; } ::-webkit-scrollbar-track { background: transparent; } ::-webkit-scrollbar-thumb { background: hsl(var(--primary-hue), 25%, 75%); border-radius: 10px; border: 2px solid transparent; background-clip: content-box; transition: background 0.3s ease; } ::-webkit-scrollbar-thumb:hover { background: hsl(var(--primary-hue), 35%, 65%); } html.dark ::-webkit-scrollbar-thumb { background: hsl(var(--primary-hue), 20%, 55%); } html.dark ::-webkit-scrollbar-thumb:hover { background: hsl(var(--primary-hue), 25%, 65%); }
+        /* Animations */
+        @keyframes pulseGlow { 0%, 100% { opacity: 0.7; box-shadow: 0 0 6px 1px hsla(var(--success-light), 0.5); } 50% { opacity: 1; box-shadow: 0 0 12px 2px hsla(var(--success-light), 0.7); } } html.dark @keyframes pulseGlow { 0%, 100% { opacity: 0.7; box-shadow: 0 0 6px 1px hsla(var(--success-dark), 0.5); } 50% { opacity: 1; box-shadow: 0 0 12px 2px hsla(var(--success-dark), 0.6); } } .animate-pulseGlow { animation: pulseGlow 2.5s infinite ease-in-out; }
+        @keyframes fadeInScaleUp { 0% { opacity: 0; transform: scale(0.98); } 100% { opacity: 1; transform: scale(1); } } .animate-fadeInScaleUp { animation: fadeInScaleUp 0.4s ease-out forwards; }
+        @keyframes fadeInUp { 0% { opacity: 0; transform: translateY(18px); } 100% { opacity: 1; transform: translateY(0); } } .animate-fadeInUp { animation: fadeInUp 0.55s ease-out forwards; }
+        /* Button and input enhancements */
+        .btn, button, [role="button"] { display: inline-flex; align-items: center; justify-content: center; transition: all 0.2s ease; cursor: pointer; border-radius: 0.375rem; padding: 0.5rem 1rem; font-weight: 500; }
+        .btn:not(:disabled):hover { transform: translateY(-1px); box-shadow: 0 3px 10px rgba(0,0,0,0.1); }
+        .btn:not(:disabled):active { transform: translateY(0px); box-shadow: 0 1px 4px rgba(0,0,0,0.1); }
+        .btn-sm { padding: 0.4rem 0.8rem; font-size: 0.875rem; min-height: 36px; } .btn-xs { padding: 0.25rem 0.6rem; font-size: 0.75rem; min-height: 30px; font-weight: 600; }
+        .input-field { border: 1px solid var(--border-light); transition: border-color 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease; border-radius: 0.375rem; background-color: #fff; padding: 0.6rem 0.8rem; }
+        html.dark .input-field { border-color: var(--border-dark); background-color: hsl(var(--primary-hue), 15%, 22%); }
+        .input-field:focus { outline: 2px solid transparent; outline-offset: 2px; border-color: hsl(var(--primary-hue), 65%, 75%); box-shadow: 0 0 0 3px hsla(var(--primary-hue), 50%, 50%, 0.25); }
+        html.dark .input-field:focus { border-color: hsl(var(--primary-hue), 55%, 65%); box-shadow: 0 0 0 3px hsla(var(--primary-hue), 40%, 40%, 0.4); }
+        select.input-field { min-height: 44px; padding-top: 0.5rem; padding-bottom: 0.5rem; } textarea.input-field { min-height: 80px; }
+        /* Modal enhancements */
+        .modal-content { max-height: 90vh; transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.3s ease; transform: scale(0.97); opacity: 0; }
+        .modal.flex .modal-content { transform: scale(1); opacity: 1; }
+        /* YouTube player enhancements */
+        #youtube-player-container { width: 100%; aspect-ratio: 16 / 9; position: relative; overflow: hidden; border-radius: 0.75rem; background-color: #000; box-shadow: 0 10px 25px rgba(0,0,0,0.15); transition: all 0.3s ease; }
+         #youtube-player-container .player-placeholder { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; color: #aaa; background: linear-gradient(135deg, #222, #111); border-radius: inherit; z-index: 1; transition: opacity 0.3s ease; }
+         #youtube-player-container .player-placeholder i { font-size: 3rem; margin-bottom: 1rem; opacity: 0.7; }
+         #youtube-player-container .player-placeholder.hidden { opacity: 0; pointer-events: none; }
+        #youtube-player-container iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none; z-index: 2; }
+        #youtube-player-container:hover { box-shadow: 0 15px 30px rgba(0,0,0,0.2); }
+        #youtube-player-container .fullscreen-controls { position: absolute; bottom: 10px; right: 10px; z-index: 3; opacity: 0; transition: opacity 0.3s ease; }
+         #youtube-player-container:hover .fullscreen-controls { opacity: 1; }
+        /* Fullscreen YouTube player */
+        .youtube-fullscreen-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.95); z-index: 99; display: flex; justify-content: center; align-items: center; opacity: 0; pointer-events: none; transition: opacity 0.3s ease; }
+        .youtube-fullscreen-overlay.active { opacity: 1; pointer-events: auto; }
+        #youtube-fullscreen-container { width: 95%; height: 95%; max-width: 100vw; max-height: 100vh; aspect-ratio: 16 / 9; position: relative; background-color: #000; box-shadow: 0 0 50px rgba(0,0,0,0.5); }
+         #youtube-fullscreen-container iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: none; }
+        .fullscreen-controls-overlay { position: fixed; bottom: 20px; right: 20px; z-index: 102; display: flex; gap: 10px; }
+        .fullscreen-btn { background-color: rgba(30,30,30,0.8); color: white; border: 1px solid rgba(255,255,255,0.2); border-radius: 50%; width: 50px; height: 50px; display: flex; justify-content: center; align-items: center; cursor: pointer; transition: all 0.3s ease; backdrop-filter: blur(5px); }
+        .fullscreen-btn:hover { background-color: rgba(0,0,0,0.9); transform: scale(1.1); border-color: rgba(255,255,255,0.4); }
+        /* Syllabus table enhancements */
+        .syllabus-table { border-collapse: separate; border-spacing: 0; width: 100%; }
+        .syllabus-table th { position: sticky; top: 0; z-index: 5; background-color: var(--bg-light); border-bottom: 2px solid var(--border-light); font-weight: 600; padding: 0.75rem 1rem; }
+        html.dark .syllabus-table th { background-color: var(--bg-dark); border-bottom-color: var(--border-dark); }
+        .syllabus-table tr:last-child td { border-bottom: none; }
+        .syllabus-table td { padding: 0.75rem 1rem; vertical-align: middle; }
+        .syllabus-table td.chapter-cell { display: flex; justify-content: space-between; align-items: center; gap: 0.75rem; }
+        .syllabus-table .chapter-name-display { flex-grow: 1; }
+        .syllabus-table .chapter-admin-buttons { display: flex; gap: 0.4rem; flex-shrink: 0; }
+        .syllabus-table .action-buttons .btn { min-width: 80px; }
+        @media (max-width: 640px) { .syllabus-table td.action-buttons > div { flex-direction: column; align-items: stretch; } .syllabus-table .action-buttons .btn { width: 100%; justify-content: center; } .syllabus-table td.chapter-cell { flex-direction: column; align-items: flex-start; } .syllabus-table .chapter-admin-buttons { margin-top: 0.5rem; } }
+        /* Loading spinner */
+        .spinner { animation: spin 1.2s linear infinite; } @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        /* Hover effects */
+        .hover-scale { transition: transform 0.3s ease; } .hover-scale:hover { transform: scale(1.015); }
+        /* Pulse effect for notifications */
+        .pulse { animation: pulse 2s infinite; } @keyframes pulse { 0% { box-shadow: 0 0 0 0 hsla(var(--danger-light), 0.7); } 70% { box-shadow: 0 0 0 10px hsla(var(--danger-light), 0); } 100% { box-shadow: 0 0 0 0 hsla(var(--danger-light), 0); } } html.dark @keyframes pulse { 0% { box-shadow: 0 0 0 0 hsla(var(--danger-dark), 0.7); } 70% { box-shadow: 0 0 0 10px hsla(var(--danger-dark), 0); } 100% { box-shadow: 0 0 0 0 hsla(var(--danger-dark), 0); } }
+        /* Accessibility Focus Outline */
+        *:focus-visible { outline: 3px solid hsl(var(--accent-hue), 90%, 70%); outline-offset: 2px; border-radius: 4px; } html.dark *:focus-visible { outline-color: hsl(var(--accent-hue), 80%, 60%); } .input-field:focus-visible { outline: none; }
+
+        /* --- Print Specific Styles --- */
+        @media print {
+            body { margin: 0; padding: 0; background-color: #fff; color: #000; font-size: 10pt; line-height: 1.4; font-family: 'Hind Siliguri', 'Segoe UI', sans-serif; }
+            /* Hide everything except the printable area */
+            body > *:not(#printable-links-area) { display: none !important; }
+            #printable-links-area { display: block !important; margin: 20mm; }
+            .print-header { text-align: center; margin-bottom: 2rem; border-bottom: 1px solid #ccc; padding-bottom: 1rem; }
+            .print-title { font-size: 16pt; font-weight: 600; margin: 0; }
+            .print-subtitle { font-size: 10pt; color: #555; margin-top: 0.25rem; }
+            .print-subject-header { font-size: 14pt; font-weight: bold; margin-top: 2rem; margin-bottom: 1rem; padding-bottom: 0.5rem; border-bottom: 2px solid #555; page-break-before: auto; page-break-after: avoid; }
+            .print-paper-header { font-size: 12pt; font-weight: bold; margin-top: 1.5rem; margin-bottom: 0.8rem; padding-left: 1em; color: #333; page-break-after: avoid; }
+            .print-links-list { list-style: none; padding-left: 1.5em; margin: 0; }
+            .print-chapter-item { margin-bottom: 0.7rem; page-break-inside: avoid; border-bottom: 1px dotted #eee; padding-bottom: 0.5rem; }
+            .print-chapter-name { display: block; font-weight: 500; color: #000; margin-bottom: 0.2rem; }
+            .print-youtube-link { display: block; font-size: 9pt; color: #0066cc; text-decoration: none; word-break: break-all; }
+            .print-youtube-link::before { content: "Link: "; font-weight: bold; color: #444; }
+            .print-no-links { text-align: center; font-style: italic; color: #777; margin-top: 1rem; }
+             /* Hide icons in print */
+            i.fas, i.fab { display: none !important; }
+             a[href^="http"]:not(.print-youtube-link)::after { content: none !important; }
+        }
+
+    </style>
+</head>
+<body class="min-h-screen text-base bg-gray-50 dark:bg-gray-900">
+
+<!-- Dashboard Page -->
+<div id="dashboard-page" class="min-h-screen flex w-full">
+
+    <!-- Sidebar -->
+    <aside id="sidebar-el" class="sidebar w-0 lg:w-72 sidebar-mobile-closed lg:transform-none" aria-label="Main Navigation Sidebar">
+        <div id="sidebar-header-clickable" class="sidebar-header" title="ড্যাশবোর্ডে ফিরে যান">
+             <div class="flex items-center overflow-hidden flex-1 min-w-0"> <span class="text-3xl text-teal-300 dark:text-teal-300 flex-shrink-0"><i class="fas fa-book-sparkles logo-icon"></i></span> <h2 class="ml-3 text-xl font-bangla font-bold whitespace-nowrap opacity-100 transition truncate">সিলেবাস<span class="font-bold text-teal-300 dark:text-teal-300 logo-year">'২৫</span></h2> </div>
+             <button id="sidebar-desktop-toggle" class="no-print hidden lg:flex items-center justify-center text-blue-100 hover:text-white focus:outline-none ml-2 p-2 rounded-full hover:bg-white/10 transition-colors" title="সাইডবার টগল করুন" aria-label="Toggle desktop sidebar"> <i class="fas fa-chevron-left"></i> </button>
+             <button id="sidebar-mobile-close" class="no-print lg:hidden flex items-center justify-center text-blue-100 hover:text-white focus:outline-none ml-2 p-2 rounded-full hover:bg-white/10 transition-colors" title="সাইডবার বন্ধ করুন" aria-label="Close mobile sidebar"> <i class="fas fa-times text-xl"></i> </button>
+        </div>
+        <nav class="flex-1 overflow-y-auto px-3 py-4 space-y-1">
+            <p class="px-4 mb-2 uppercase tracking-wider text-xs text-blue-200 dark:text-gray-400 font-semibold">বিষয়সমূহ</p>
+            <ul id="subject-menu" class="space-y-0.5">
+                <li><a href="#" class="flex items-center px-4 py-2.5 rounded-md transition text-white" data-subject="পদার্থবিজ্ঞান"><i class="fas fa-atom w-6 fa-fw mr-3 text-blue-300"></i> <span>পদার্থবিজ্ঞান</span></a></li>
+                <li><a href="#" class="flex items-center px-4 py-2.5 rounded-md transition text-white" data-subject="রসায়ন"><i class="fas fa-flask-vial w-6 fa-fw mr-3 text-teal-300"></i> <span>রসায়ন</span></a></li>
+                <li><a href="#" class="flex items-center px-4 py-2.5 rounded-md transition text-white" data-subject="জীববিজ্ঞান"><i class="fas fa-leaf w-6 fa-fw mr-3 text-green-400"></i> <span>জীববিজ্ঞান</span></a></li>
+                <li><a href="#" class="flex items-center px-4 py-2.5 rounded-md transition text-white" data-subject="উচ্চতর গণিত"><i class="fas fa-calculator w-6 fa-fw mr-3 text-purple-300"></i> <span>উচ্চতর গণিত</span></a></li>
+                 <li><a href="#" class="flex items-center px-4 py-2.5 rounded-md transition text-white" data-subject="তথ্য ও যোগাযোগ প্রযুক্তি"><i class="fas fa-network-wired w-6 fa-fw mr-3 text-pink-300"></i> <span>আইসিটি</span></a></li>
+                 <li><a href="#" class="flex items-center px-4 py-2.5 rounded-md transition text-white" data-subject="বাংলা"><i class="fas fa-language w-6 fa-fw mr-3 text-orange-300"></i> <span>বাংলা</span></a></li>
+                 <li><a href="#" class="flex items-center px-4 py-2.5 rounded-md transition text-white" data-subject="ইংরেজি"><i class="fas fa-spell-check w-6 fa-fw mr-3 text-yellow-300"></i> <span>ইংরেজি</span></a></li>
+            </ul>
+             <p class="px-4 mt-5 mb-2 uppercase tracking-wider text-xs text-blue-200 dark:text-gray-400 font-semibold">অন্যান্য</p>
+             <ul class="space-y-0.5">
+                 <li><a href="https://docs.google.com/spreadsheets/d/18imNLdf5iLHEA7XumV4cQOouoszYvEqaK96afRzV8Yw/edit?gid=0#gid=0" target="_blank" rel="noopener noreferrer" class="flex items-center px-4 py-2.5 rounded-md transition text-white"> <i class="fas fa-table-list w-6 fa-fw mr-3 text-indigo-300"></i> <span>ক্লাস রিসোর্স (Sheets)</span> <i class="fas fa-external-link-alt text-xs ml-auto opacity-70" aria-hidden="true"></i> </a></li>
+             </ul>
+        </nav>
+        <div class="sidebar-footer px-4 py-3 text-center">
+            <p class="text-xs text-blue-200/80 dark:text-gray-400/80">HSC 2025 Syllabus Portal</p>
+            <p class="text-xs text-blue-200/60 dark:text-gray-400/60 mt-1">Version 1.2.3</p> <!-- Version Bump -->
+        </div>
+    </aside>
+
+    <div id="sidebar-overlay" class="sidebar-overlay fixed inset-0 z-30 hidden bg-black bg-opacity-60 dark:bg-opacity-70 lg:hidden transition-opacity duration-300 ease-in-out" aria-hidden="true"></div>
+
+    <main id="main-content" class="main-content flex-1 lg:ml-72 transition-all duration-350 ease-in-out">
+         <header class="main-header glass-bg flex items-center mb-6 rounded-xl shadow-lg border border-transparent dark:border-gray-700/50 backdrop-blur-xl">
+             <button id="sidebar-mobile-toggle" class="no-print lg:hidden text-gray-700 dark:text-gray-300 mr-3 -ml-2 p-2 focus:outline-none hover:bg-gray-200 dark:hover:bg-gray-700 rounded-full transition-colors" title="মেনু দেখান" aria-label="Toggle mobile sidebar menu"> <i class="fas fa-bars text-xl" aria-hidden="true"></i> </button>
+             <h1 id="main-title" class="text-lg md:text-xl font-bold text-indigo-900 dark:text-indigo-200 tracking-tight flex-1 truncate animate__animated animate__fadeIn">ড্যাশবোর্ড</h1>
+             <div class="flex items-center gap-2 md:gap-3 header-actions ml-auto">
+                  <button id="theme-toggle" class="cursor-pointer text-gray-500 dark:text-yellow-400 hover:text-indigo-600 dark:hover:text-yellow-300 transition p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700/60" title="Toggle Theme" aria-label="Toggle color theme"> <i class="fas fa-moon text-xl" aria-hidden="true"></i> </button>
+                  <button class="relative group text-gray-400 dark:text-gray-500 hover:text-indigo-500 dark:hover:text-indigo-300 p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700/60 transition-colors" title="নোটিফিকেশন" aria-label="View notifications"> <i class="fas fa-bell fa-lg" aria-hidden="true"></i> <span class="absolute top-0.5 right-0.5 block h-2.5 w-2.5 rounded-full bg-red-500 ring-2 ring-white dark:ring-gray-800 pulse"></span> </button>
+                 <div class="view-mode-toggle">
+                      <button id="view-toggle-student" class="btn" title="শিক্ষার্থী ভিউ"> <i class="fas fa-user-graduate mr-1.5 text-xs"></i> Student </button>
+                      <button id="view-toggle-admin" class="btn" title="অ্যাডমিন ভিউ"> <i class="fas fa-user-shield mr-1.5 text-xs"></i> Admin </button>
+                  </div>
+                 <div class="user-profile ml-2">
+                     <div class="user-avatar"> <i class="fas fa-user"></i> </div>
+                     <div class="user-info hidden md:block"> <span class="user-name" id="user-name-display">শিক্ষার্থী</span> <span class="user-role" id="user-role-display">Student</span> </div>
+                 </div>
+             </div>
+         </header>
+
+        <div id="loading-indicator" class="hidden flex flex-col items-center justify-center py-16 text-blue-500 dark:text-blue-400">
+            <svg class="spinner h-14 w-14 text-indigo-500 dark:text-indigo-400 mb-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"> <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle> <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path> </svg>
+            <p class="text-xl font-semibold font-bangla">তথ্য লোড হচ্ছে...</p>
+        </div>
+
+        <div id="content-sections-wrapper" class="space-y-8 px-4 md:px-6 pb-8">
+            <section id="stats-summary-section" class="content-section rounded-xl glass-bg shadow-lg p-5 border border-transparent dark:border-gray-700/50 animate-fadeInUp hover-scale hidden">
+                 <div id="stats-summary-content" class="flex flex-col md:flex-row items-center justify-center text-center md:text-left gap-2 md:gap-4 text-gray-700 dark:text-gray-300 py-2"> <i class="fas fa-spinner fa-spin mr-2 text-xl"></i> পরিসংখ্যান লোড হচ্ছে... </div>
+            </section>
+            <section id="notice-board-section" class="content-section rounded-xl glass-bg shadow-lg p-5 md:p-6 border border-transparent dark:border-gray-700/50 animate-fadeInUp hover-scale hidden" style="animation-delay: 100ms;">
+                <div class="flex flex-col sm:flex-row items-center justify-between gap-3 section-header pb-4 border-b border-gray-200 dark:border-gray-700 mb-5">
+                    <h2 class="text-xl font-bold flex items-center gap-2.5 font-bangla text-indigo-700 dark:text-indigo-300 flex-grow"><i class="fas fa-bullhorn text-yellow-500 dark:text-yellow-400 fa-fw"></i> সর্বশেষ নোটিশ</h2>
+                    <!-- Button Renamed and Repurposed -->
+                    <button id="print-all-links-btn" class="btn btn-sm bg-teal-500 hover:bg-teal-600 text-white px-4 py-1.5 rounded-md font-semibold shadow-md transition duration-150 ease-in-out flex items-center gap-1.5 flex-shrink-0 hover:shadow-lg transform hover:-translate-y-1 ml-auto mr-3" title="সকল ইউটিউব লিংক প্রিন্ট করুন">
+                        <i class="fas fa-print"></i> <span>লিংক প্রিন্ট</span>
+                    </button>
+                    <button id="add-notice-btn" class="hidden btn btn-sm bg-yellow-500 hover:bg-yellow-600 text-white px-4 py-1.5 rounded-md font-semibold shadow-md transition duration-150 ease-in-out flex items-center gap-1.5 flex-shrink-0 hover:shadow-lg transform hover:-translate-y-1"> <i class="fas fa-plus-circle"></i> <span>নতুন নোটিশ</span> </button>
+                </div>
+                <div id="notice-board" class="notice-board py-1 space-y-4">
+                    <p class="no-notices text-center text-gray-500 dark:text-gray-400 py-4 italic text-base hidden">এখনো কোনো নোটিশ যুক্ত করা হয়নি।</p>
+                    <p id="notice-limit-indicator" class="text-center text-xs text-gray-500 dark:text-gray-400 mt-4 hidden">শুধুমাত্র সর্বশেষ ২টি নোটিশ দেখানো হচ্ছে।</p> <!-- Updated indicator text -->
+                </div>
+            </section>
+            <section id="content-area" class="content-section content-area glass-bg shadow-lg rounded-xl p-5 md:p-6 border border-transparent dark:border-gray-700/50 min-h-[400px]"> </section>
+        </div>
+    </main>
+</div>
+
+<!-- Common Modal Structure -->
+<div id="modal-template" class="modal fixed inset-0 z-[60] bg-black bg-opacity-75 dark:bg-opacity-85 hidden items-center justify-center p-4 animate-fadeIn" role="dialog" aria-modal="true" aria-labelledby="modal-title"> <div class="modal-content glass-bg w-full rounded-2xl shadow-xl relative max-h-[90vh] flex flex-col overflow-hidden border border-gray-300 dark:border-gray-700"> <div class="modal-header flex items-center justify-between border-b border-gray-200 dark:border-gray-700 p-4 flex-shrink-0"> <h3 id="modal-title" class="modal-title-slot text-lg font-bold text-indigo-700 dark:text-indigo-300 font-bangla">Modal Title</h3> <button class="close-btn text-3xl font-light text-gray-400 dark:text-gray-500 hover:text-red-500 dark:hover:text-red-400 transition transform hover:scale-110 p-1 -m-1 leading-none" aria-label="Close modal">&times;</button> </div> <div class="modal-body p-5 md:p-6 overflow-y-auto flex-1 scrollbar-thin scrollbar-thumb-gray-400 dark:scrollbar-thumb-gray-600 scrollbar-track-gray-200 dark:scrollbar-track-gray-700/50"> </div> <div class="modal-footer p-4 border-t border-gray-200 dark:border-gray-700 flex-shrink-0 bg-gray-50 dark:bg-gray-800/50 text-right space-x-3"> <button type="button" class="btn-modal-close btn btn-sm bg-gray-200 hover:bg-gray-300 text-gray-700 dark:bg-gray-600 dark:text-gray-200 dark:hover:bg-gray-500">বন্ধ করুন</button> </div> </div> </div>
+
+<!-- Specific Modal Content Templates (Unchanged) -->
+<div id="playlist-modal-content" class="hidden"> <div id="youtube-player-container" class="youtube-player-container relative mb-4"> <div class="player-placeholder flex flex-col items-center justify-center h-full"> <i class="fab fa-youtube text-red-500 opacity-70"></i> <span class="mt-2 text-lg text-gray-400 dark:text-gray-500">প্লে-লিস্ট লোড হচ্ছে...</span> </div> <div class="fullscreen-controls"> <button class="fullscreen-btn" id="enter-fullscreen" title="ফুলস্ক্রিন" aria-label="Enter fullscreen"> <i class="fas fa-expand"></i> </button> </div> </div> </div>
+<div id="admin-playlist-modal-content" class="hidden"> <p class="mb-3 text-blue-700 dark:text-blue-300">অধ্যায়: <strong id="admin-modal-chapter-name" class="text-indigo-600 dark:text-indigo-400 font-semibold"></strong></p> <form id="playlist-form" onsubmit="return false;"> <input type="hidden" id="edit-chapter-id-playlist"> <input type="hidden" id="edit-subject-playlist"> <div class="mb-4"> <label for="playlist-url" class="font-semibold mb-1.5 block text-indigo-700 dark:text-indigo-300"><i class="fab fa-youtube mr-1.5"></i> ইউটিউব প্লে-লিস্ট URL / Embed</label> <textarea id="playlist-url" rows="3" class="input-field w-full" placeholder="এখানে ইউটিউব Playlist URL / Embed কোড পেস্ট করুন..."></textarea> <small class="text-blue-500 dark:text-blue-400 text-xs mt-1 block">সিস্টেম স্বয়ংক্রিয়ভাবে URL/Embed কোড সনাক্ত করার চেষ্টা করবে।</small> </div> <p id="admin-playlist-message" class="message hidden text-sm px-3 py-2 rounded-md mb-3"></p> </form> </div>
+<div id="admin-notice-modal-content" class="hidden"> <form id="notice-form" onsubmit="return false;"> <input type="hidden" id="edit-notice-id"> <div class="mb-4"> <label for="notice-title" class="block font-semibold mb-1.5 text-indigo-700 dark:text-indigo-300"><i class="fas fa-heading mr-1.5"></i> শিরোনাম</label> <input type="text" id="notice-title" class="input-field w-full" placeholder="নোটিশের শিরোনাম" required> </div> <div class="mb-4"> <label for="notice-content" class="block font-semibold mb-1.5 text-indigo-700 dark:text-indigo-300"><i class="fas fa-paragraph mr-1.5"></i> বিবরণ</label> <textarea id="notice-content" rows="4" class="input-field w-full" placeholder="নোটিশের বিস্তারিত..." required></textarea> </div> <div class="mb-5"> <label for="notice-link" class="block font-semibold mb-1.5 text-indigo-700 dark:text-indigo-300"><i class="fas fa-link mr-1.5"></i> লিংক (ঐচ্ছিক)</label> <input type="url" id="notice-link" class="input-field w-full" placeholder="https://example.com"> <small class="text-blue-500 dark:text-blue-400 text-xs mt-1 block">প্রয়োজনে একটি প্রাসঙ্গিক লিংক দিন (যেমন: ফর্ম, ওয়েবসাইট, ডকুমেন্ট)।</small> </div> <p id="admin-notice-message" class="message hidden text-sm px-3 py-2 rounded-md mb-3"></p> </form> </div>
+<div id="admin-chapter-modal-content" class="hidden"> <form id="chapter-form" onsubmit="return false;"> <input type="hidden" id="edit-chapter-subject"> <input type="hidden" id="edit-chapter-paper"> <input type="hidden" id="edit-chapter-id" value=""> <div class="mb-5"> <label for="chapter-name" class="font-semibold mb-1.5 block text-indigo-700 dark:text-indigo-300"><i class="fas fa-book-open mr-1.5"></i> অধ্যায়ের নাম</label> <input type="text" id="chapter-name" class="input-field w-full" placeholder="অধ্যায়ের নাম লিখুন" required> </div> <p id="admin-chapter-message" class="message hidden text-sm px-3 py-2 rounded-md mb-3"></p> </form> </div>
+
+<!-- Fullscreen YouTube Overlay -->
+<div id="youtube-fullscreen-overlay" class="youtube-fullscreen-overlay hidden"> <div id="youtube-fullscreen-container"> </div> <div class="fullscreen-controls-overlay"> <button class="fullscreen-btn" id="exit-fullscreen" title="ফুলস্ক্রিন বন্ধ" aria-label="Exit fullscreen"> <i class="fas fa-compress"></i> </button> </div> </div>
+
+<!-- Welcome Section Template -->
+<div id="welcome-section-template" class="hidden"> <div class="welcome-content flex flex-col items-center justify-center text-center py-12 transition animate-fadeInUp bg-gradient-to-br from-indigo-50 to-blue-100 dark:from-gray-800/50 dark:to-gray-900/60 rounded-xl"> <span class="mb-5 text-6xl text-indigo-500 dark:text-indigo-400 animate__animated animate__pulse animate__infinite"><i class="fas fa-hand-sparkles"></i></span> <h2 class="text-2xl md:text-3xl font-bold text-blue-800 dark:text-blue-200 mb-3 animate__animated animate__fadeInDown">HSC 2025 পোর্টালে স্বাগতম!</h2> <p class="text-gray-700 dark:text-gray-300 mb-4 max-w-2xl text-lg px-4 animate__animated animate__fadeIn animate__delay-1s">বাম পাশের মেনু থেকে আপনার বিষয়টি নির্বাচন করুন। নোটিশ বোর্ড দেখুন ও পরিসংখ্যান অনুসরণ করুন।</p> <p class="mt-2 text-sm text-gray-600 dark:text-gray-400 animate__animated animate__fadeIn animate__delay-1.5s">হেডার থেকে <button class="font-semibold text-indigo-600 dark:text-indigo-400 hover:underline focus:outline-none" onclick="document.getElementById('view-toggle-student').click()">Student</button> / <button class="font-semibold text-purple-600 dark:text-purple-400 hover:underline focus:outline-none" onclick="document.getElementById('view-toggle-admin').click()">Admin</button> ভিউ পরিবর্তন করতে পারবেন।</p> <p class="disclaimer mt-6 text-sm bg-blue-100 dark:bg-gray-700/80 border-l-4 border-blue-400 dark:border-blue-500 px-4 py-3 rounded-md text-blue-800 dark:text-blue-200 max-w-xl mx-auto animate__animated animate__fadeIn animate__delay-2s"> <strong><i class="fas fa-info-circle mr-1.5"></i> দৃষ্টি আকর্ষণ:</strong> এই সিলেবাসটি মূলত ২০২৩ সালের সংক্ষিপ্ত সিলেবাসের উপর ভিত্তি করে তৈরি। এটি শিক্ষাবোর্ডের চূড়ান্ত সিলেবাস নয়। সর্বশেষ ও সঠিক তথ্যের জন্য সর্বদা নিজ নিজ শিক্ষাবোর্ড ও শিক্ষা প্রতিষ্ঠানের অফিসিয়াল ওয়েবসাইট দেখুন। </p> </div> </div>
+
+<!-- Area dedicated for printing LINKS -->
+<div id="printable-links-area" class="hidden">
+    <!-- Content generated by JS before printing -->
+</div>
+
+
+<!-- Main JS -->
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    /* ========= DOM Elements ========= */
+    const dashboardPage = document.getElementById('dashboard-page');
+    const sidebar = document.getElementById('sidebar-el');
+    const sidebarHeaderClickable = document.getElementById('sidebar-header-clickable');
+    const sidebarMobileToggle = document.getElementById('sidebar-mobile-toggle');
+    const sidebarMobileClose = document.getElementById('sidebar-mobile-close');
+    const sidebarDesktopToggle = document.getElementById('sidebar-desktop-toggle');
+    const sidebarOverlay = document.getElementById('sidebar-overlay');
+    const mainContent = document.getElementById('main-content');
+    const userRoleDisplay = document.getElementById('user-role-display');
+    const userNameDisplay = document.getElementById('user-name-display');
+    const subjectMenu = document.getElementById('subject-menu');
+    const contentArea = document.getElementById('content-area');
+    const mainTitle = document.getElementById('main-title');
+    const loadingIndicator = document.getElementById('loading-indicator');
+    const contentSectionsWrapper = document.getElementById('content-sections-wrapper');
+    const statsSummarySection = document.getElementById('stats-summary-section');
+    const statsSummaryContent = document.getElementById('stats-summary-content');
+    const noticeBoardSection = document.getElementById('notice-board-section');
+    const addNoticeBtn = document.getElementById('add-notice-btn');
+    const printAllLinksBtn = document.getElementById('print-all-links-btn'); // New ID
+    const noticeBoard = document.getElementById('notice-board');
+    const noNoticesMsg = noticeBoard?.querySelector('.no-notices');
+    const noticeLimitIndicator = document.getElementById('notice-limit-indicator');
+    const themeToggleBtn = document.getElementById('theme-toggle');
+    const viewToggleStudentBtn = document.getElementById('view-toggle-student');
+    const viewToggleAdminBtn = document.getElementById('view-toggle-admin');
+    const modalTemplate = document.getElementById('modal-template');
+    const modalTitleEl = document.getElementById('modal-title');
+    const modalBody = modalTemplate.querySelector('.modal-body');
+    const modalFooter = modalTemplate.querySelector('.modal-footer');
+    const modalCloseBtns = modalTemplate.querySelectorAll('.close-btn, .btn-modal-close');
+    const welcomeSectionTemplateHTML = document.getElementById('welcome-section-template')?.innerHTML || '<p>Welcome section template not found.</p>';
+    const playlistModalContentHTML = document.getElementById('playlist-modal-content')?.innerHTML || '';
+    const adminPlaylistModalContentHTML = document.getElementById('admin-playlist-modal-content')?.innerHTML || '';
+    const adminNoticeModalContentHTML = document.getElementById('admin-notice-modal-content')?.innerHTML || '';
+    const adminChapterModalContentHTML = document.getElementById('admin-chapter-modal-content')?.innerHTML || '';
+    const youtubeFullscreenOverlay = document.getElementById('youtube-fullscreen-overlay');
+    const youtubeFullscreenContainer = document.getElementById('youtube-fullscreen-container');
+    const exitFullscreenBtn = document.getElementById('exit-fullscreen');
+    const printableLinksArea = document.getElementById('printable-links-area'); // New ID
+
+    /* ========= State Variables (Default syllabus data assumed present) ========= */
+    let isAdmin = false; const notices = []; let currentModalTrigger = null; let resizeTimeout;
+    const defaultSyllabusData = { /* Assume defined as before */
+        'পদার্থবিজ্ঞান':{'প্রথম পত্র':["ভৌত জগত ও পরিমাপ", "ভেক্টর", "গতিবিদ্যা", "নিউটনীয় বলবিদ্যা", "কাজ, শক্তি ও ক্ষমতা", "মহাকর্ষ ও অভিকর্ষ", "পদার্থের গাঠনিক ধর্ম", "পর্যাবৃত্ত গতি", "তরঙ্গ", "আদর্শ গ্যাস ও গ্যাসের গতিতত্ত্ব"],'দ্বিতীয় পত্র':["তাপগতিবিদ্যা", "স্থির তড়িৎ", "চল তড়িৎ", "তড়িৎ প্রবাহের চৌম্বক ক্রিয়া ও চৌম্বকত্ব", "তাড়িতচৌম্বক আবেশ ও দিক পরিবর্তী প্রবাহ", "জ্যামিতিক আলোকবিজ্ঞান", "ভৌত আলোকবিজ্ঞান", "আধুনিক পদার্থবিজ্ঞানের সূচনা", "পরমাণুর মডেল এবং নিউক্লিয়ার পদার্থবিজ্ঞান", "সেমিকন্ডাক্টর ও ইলেকট্রনিক্স"]},'রসায়ন':{'প্রথম পত্র':["ল্যাবরেটরির নিরাপদ ব্যবহার", "গুণগত রসায়ন", "মৌলের পর্যায়বৃত্ত ধর্ম ও রাসায়নিক বন্ধন", "রাসায়নিক পরিবর্তন", "কর্মমুখী রসায়ন"],'দ্বিতীয় পত্র':["পরিবেশ রসায়ন", "জৈব রসায়ন", "পরিমাণগত রসায়ন", "তড়িৎ রসায়ন", "অর্থনৈতিক রসায়ন"]},'জীববিজ্ঞান':{'প্রথম পত্র (উদ্ভিদবিজ্ঞান)':["কোষ ও এর গঠন", "কোষ বিভাজন", "অণুজীব", "নগ্নবীজী ও আবৃতবীজী উদ্ভিদ", "শৈবাল ও ছত্রাক", "ব্রায়োফাইটা ও টেরিডোফাইটা", "টিস্যু ও টিস্যুতন্ত্র", "উদ্ভিদ শারীরতত্ত্ব", "জীব প্রযুক্তি", "জীবের পরিবেশ, বিস্তার ও সংরক্ষণ", "উদ্ভিদের প্রজনন"],'দ্বিতীয় পত্র (প্রাণিবিজ্ঞান)':["প্রাণীর বিভিন্নতা ও শ্রেণিবিন্যাস", "প্রাণীর পরিচিতি (হাইড্রা, ঘাসফড়িং, রুই মাছ)", "পরিপাক ও শোষণ", "রক্ত ও সংবহন", "শ্বাস ক্রিয়া ও শ্বসন", "বর্জ্য ও নিষ্কাশন", "চলন ও অঙ্গচালনা", "সমন্বয় ও নিয়ন্ত্রণ", "মানব জীবনের ধারাবাহিকতা", "মানবদেহের প্রতিরক্ষা", "জিনতত্ত্ব ও বিবর্তন", "প্রাণীর আচরণ"]},'উচ্চতর গণিত':{'প্রথম পত্র':["ম্যাট্রিক্স ও নির্ণায়ক", "ভেক্টর", "সরলরেখা", "বৃত্ত", "বিন্যাস ও সমাবেশ", "ত্রিকোণমিতিক অনুপাত", "সংযুক্ত কোণের ত্রিকোণমিতিক অনুপাত", "অন্তরীকরণ", "যোগজীকরণ", "ফাংশন ও ফাংশনের লেখচিত্র"],'দ্বিতীয় পত্র':["বাস্তব সংখ্যা ও অসমতা", "জটিল সংখ্যা", "বহুপদী ও বহুপদী সমীকরণ", "দ্বিপদী বিস্তৃতি", "কনিকস", "বিপরীত ত্রিকোণমিতিক ফাংশন ও ত্রিকোণমিতিক সমীকরণ", "স্থিতিবিদ্যা", "সমতলে বস্তুকণার গতি", "বিস্তার পরিমাপ ও সম্ভাবনা", "গতিবিদ্যা"]},'তথ্য ও যোগাযোগ প্রযুক্তি':{'(ICT - একক পত্র)':["তথ্য ও যোগাযোগ প্রযুক্তি: বিশ্ব ও বাংলাদেশ প্রেক্ষিত", "কমিউনিকেশন সিস্টেমস ও নেটওয়ার্কিং", "সংখ্যা পদ্ধতি ও ডিজিটাল ডিভাইস", "ওয়েব ডিজাইন পরিচিতি এবং HTML", "প্রোগ্রামিং ভাষা", "ডেটাবেজ ম্যানেজমেন্ট সিস্টেম"]},'বাংলা':{'প্রথম পত্র (সাহিত্য পাঠ)':["গদ্য: অপরিচিতা", "গদ্য: বিলাসী", "গদ্য: আমার পথ", "গদ্য: মানব-কল্যাণ", "গদ্য: মাসি-পিসি", "গদ্য: বায়ান্নর দিনগুলো", "গদ্য: রেইনকোট", "গদ্য: মহাজাগতিক কিউরেটর", "গদ্য: নেকলেস", "পদ্য: ঐকতান", "পদ্য: সাম্যবাদী", "পদ্য: এই পৃথিবীতে এক স্থান আছে", "পদ্য: তাহারেই পড়ে মনে", "পদ্য: আঠারো বছর বয়স", "পদ্য: ফেব্রুয়ারি ১৯৬৯", "পদ্য: আমি কিংবদন্তির কথা বলছি", "পদ্য: নূরলদীনের কথা মনে পড়ে যায়", "পদ্য: লোক-লোকান্তর", "সহপাঠ: লালসালু (উপন্যাস)", "সহপাঠ: সিরাজউদ্দৌলা (নাটক)"],'দ্বিতীয় পত্র (ব্যাকরণ ও নির্মিতি)':["বাংলা উচ্চারণের নিয়ম", "বাংলা বানানের নিয়ম", "বাংলা ভাষার ব্যাকরণিক শব্দশ্রেণি", "বাংলা শব্দ গঠন: উপসর্গ, প্রত্যয়, সমাস", "বাক্যতত্ত্ব", "বাংলা ভাষার অপপ্রয়োগ ও শুদ্ধ প্রয়োগ", "পারিভাষিক শব্দ ও অনুবাদ", "দিনলিপি লিখন ও প্রতিবেদন রচনা", "বৈদ্যুতিন চিঠি ও আবেদনপত্র", "সারাংশ/সারমর্ম লিখন", "ভাব-সম্প্রসারণ", "সংলাপ রচনা", "খুদে গল্প রচনা", "প্রবন্ধ রচনা"]},'ইংরেজি':{'First Paper (English for Today)':["Unit 1: People or Institutions Making History", "Unit 2: Traffic Education", "Unit 3: Food Adulteration", "Unit 4: Human Relationships", "Unit 5: Adolescence", "Unit 6: Environment and Nature", "Unit 7: Rights and Responsibilities", "Unit 8: Diaspora", "Unit 9: Art and Culture", "Unit 10: Peace and Conflict", "Unit 11: Tours and Travels", "Unit 12: Science and Technology", "Unit 13: Education and Life", "Unit 14: Nationhood"],'Second Paper (Grammar & Composition)':["Grammar: Articles", "Grammar: Prepositions", "Grammar: Use of phrases and words", "Grammar: Completing sentences", "Grammar: Right forms of verbs", "Grammar: Narrative style (Direct/Indirect)", "Grammar: Pronoun referencing", "Grammar: Modifiers", "Grammar: Connectors", "Grammar: Antonyms and Synonyms", "Grammar: Punctuation", "Composition: Formal Letter/Email Writing", "Composition: Report Writing", "Composition: Paragraph Writing", "Composition: Completing Story", "Composition: Summary Writing", "Composition: Essay Writing"]}
+    };
+
+    /* ========= Constants ========= */
+    const LOCAL_STORAGE_PREFIX = 'hsc2025_portal_v9_'; const NOTICE_STORAGE_KEY = LOCAL_STORAGE_PREFIX + 'notices'; const PLAYLIST_STORAGE_KEY_PREFIX = LOCAL_STORAGE_PREFIX + 'playlist_'; const THEME_KEY = LOCAL_STORAGE_PREFIX + 'theme'; const SIDEBAR_STATE_KEY = LOCAL_STORAGE_PREFIX + 'sidebarState'; const VIEW_MODE_KEY = LOCAL_STORAGE_PREFIX + 'viewMode'; const LOCAL_STORAGE_SYLLABUS_PREFIX = LOCAL_STORAGE_PREFIX + 'syllabus_'; const FOCUSABLE_ELEMENTS_SELECTOR = 'button:not(:disabled), [href], input:not(:disabled), select:not(:disabled), textarea:not(:disabled), [tabindex]:not([tabindex="-1"])'; const NOTICE_DISPLAY_LIMIT = 2;
+
+    /* ========= Utility Functions (Unchanged) ========= */
+    const show = (el) => el?.classList.remove('hidden'); const hide = (el) => el?.classList.add('hidden'); const fadeOut = (el, duration = 300, callback) => { if (!el || el.classList.contains('hidden')) { if (callback) callback(); return; } el.style.transition = `opacity ${duration}ms ease-out`; el.style.opacity = '0'; setTimeout(() => { hide(el); el.style.removeProperty('opacity'); el.style.removeProperty('transition'); if (callback) callback(); }, duration); }; const fadeIn = (el, duration = 300) => { if (!el || !el.classList.contains('hidden')) return; el.style.opacity = '0'; show(el); requestAnimationFrame(() => { el.style.transition = `opacity ${duration}ms ease-in`; el.style.opacity = '1'; }); setTimeout(() => el.style.removeProperty('transition'), duration + 50); }; function safeSetItem(key, value) { try { localStorage.setItem(key, value); return true; } catch (error) { console.error(`Error setting localStorage item "${key}":`, error); alert(`Error saving data: ${error.message}. LocalStorage might be full.`); return false; } } function safeGetItem(key) { try { return localStorage.getItem(key); } catch (error) { console.error(`Error getting localStorage item "${key}":`, error); return null; } } function safeRemoveItem(key) { try { localStorage.removeItem(key); return true; } catch (error) { console.error(`Error removing localStorage item "${key}":`, error); return false; } } function sanitizeHTML(str) { if (typeof str !== 'string') return ''; const temp = document.createElement('div'); temp.textContent = str; return temp.innerHTML; } function isMobile() { return window.innerWidth < 1024; } function showTemporaryMessage(msgElement, text, isSuccess = true, duration = 3500) { if (!msgElement) return; msgElement.textContent = text; const baseClasses = 'message text-sm px-4 py-2 rounded-md mb-3 border font-medium'; const successClasses = 'bg-green-50 dark:bg-green-900/60 border-green-300 dark:border-green-600/50 text-green-700 dark:text-green-300'; const errorClasses = 'bg-red-50 dark:bg-red-900/60 border-red-300 dark:border-red-600/50 text-red-700 dark:text-red-300'; msgElement.className = `${baseClasses} ${isSuccess ? successClasses : errorClasses}`; fadeIn(msgElement, 200); setTimeout(() => fadeOut(msgElement, 500), duration); } function debounce(func, wait) { let timeout; return function executedFunction(...args) { const later = () => { clearTimeout(timeout); func(...args); }; clearTimeout(timeout); timeout = setTimeout(later, wait); }; } function generateUniqueId(prefix = 'id') { return `${prefix}-${Date.now()}-${Math.random().toString(16).slice(2, 8)}`; }
+
+    /* ========= Theme Management (Unchanged) ========= */
+    function applyTheme(theme) { if (theme === 'dark') { document.documentElement.classList.add('dark'); if (themeToggleBtn) themeToggleBtn.innerHTML = '<i class="fas fa-sun text-xl" aria-hidden="true"></i>'; safeSetItem(THEME_KEY, 'dark'); } else { document.documentElement.classList.remove('dark'); if (themeToggleBtn) themeToggleBtn.innerHTML = '<i class="fas fa-moon text-xl" aria-hidden="true"></i>'; safeSetItem(THEME_KEY, 'light'); } } function toggleTheme() { const currentTheme = safeGetItem(THEME_KEY) || 'light'; applyTheme(currentTheme === 'dark' ? 'light' : 'dark'); } function loadTheme() { const savedTheme = safeGetItem(THEME_KEY); if (!savedTheme && window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) { applyTheme('dark'); } else { applyTheme(savedTheme || 'light'); } }
+
+    /* ========= View Mode Management (Unchanged) ========= */
+    function setViewMode(setAdmin) { isAdmin = setAdmin; safeSetItem(VIEW_MODE_KEY, isAdmin ? 'admin' : 'student'); updateUiForViewMode(); refreshCurrentSyllabusView(); renderNotices(); } function updateUiForViewMode() { const currentRole = isAdmin ? 'Admin' : 'Student'; const currentRoleBn = isAdmin ? 'অ্যাডমিন' : 'শিক্ষার্থী'; if (userRoleDisplay) userRoleDisplay.textContent = currentRole; if (userNameDisplay) userNameDisplay.textContent = currentRoleBn; if (viewToggleStudentBtn) viewToggleStudentBtn.classList.toggle('active', !isAdmin); if (viewToggleAdminBtn) viewToggleAdminBtn.classList.toggle('active', isAdmin); if (addNoticeBtn) { if (isAdmin) show(addNoticeBtn); else hide(addNoticeBtn); } } function loadViewMode() { const savedMode = safeGetItem(VIEW_MODE_KEY); isAdmin = (savedMode === 'admin'); updateUiForViewMode(); }
+
+    /* ========= Sidebar Management (Unchanged) ========= */
+    function setSidebarState(isOpen) { if (isMobile()) { if (isOpen) { sidebar?.classList.remove('sidebar-mobile-closed'); sidebar?.classList.add('sidebar-mobile-open'); fadeIn(sidebarOverlay, 200); document.body.style.overflow = 'hidden'; sidebar?.focus(); } else { sidebar?.classList.add('sidebar-mobile-closed'); sidebar?.classList.remove('sidebar-mobile-open'); fadeOut(sidebarOverlay, 200); document.body.style.overflow = ''; } } else { const desktopToggleIcon = sidebarDesktopToggle?.querySelector('i'); if (isOpen) { sidebar?.classList.remove('sidebar-desktop-closed'); mainContent?.classList.remove('main-content-collapsed'); mainContent?.classList.add('main-content-expanded'); if (desktopToggleIcon) desktopToggleIcon.className = 'fas fa-chevron-left'; safeSetItem(SIDEBAR_STATE_KEY, 'open'); sidebarDesktopToggle?.setAttribute('aria-expanded', 'true'); } else { sidebar?.classList.add('sidebar-desktop-closed'); mainContent?.classList.add('main-content-collapsed'); mainContent?.classList.remove('main-content-expanded'); if (desktopToggleIcon) desktopToggleIcon.className = 'fas fa-chevron-right'; safeSetItem(SIDEBAR_STATE_KEY, 'closed'); sidebarDesktopToggle?.setAttribute('aria-expanded', 'false'); } } } function toggleSidebar() { if (isMobile()) { const isOpen = sidebar?.classList.contains('sidebar-mobile-open'); setSidebarState(!isOpen); } else { const isOpen = !sidebar?.classList.contains('sidebar-desktop-closed'); setSidebarState(!isOpen); } } function loadSidebarState() { if (!isMobile()) { const savedState = safeGetItem(SIDEBAR_STATE_KEY); setSidebarState(savedState !== 'closed'); sidebar?.classList.remove('sidebar-mobile-closed', 'sidebar-mobile-open'); } else { setSidebarState(false); sidebar?.classList.remove('sidebar-desktop-closed'); } }
+
+    /* ========= Dashboard Initialization ========= */
+    function initializeApp() { loadTheme(); loadViewMode(); show(dashboardPage); loadSidebarState(); updateStatsSummary(); displayWelcome(); }
+
+    /* ========= Syllabus Data Handling (Unchanged) ========= */
+    function formatDefaultChapters(chapters) { if (!Array.isArray(chapters)) return []; return chapters.map(name => ({ id: generateUniqueId('ch'), name: name })); } function getSyllabusDataForSubject(subject) { const storageKey = LOCAL_STORAGE_SYLLABUS_PREFIX + subject; const storedData = safeGetItem(storageKey); if (storedData) { try { const parsedData = JSON.parse(storedData); if (parsedData && typeof parsedData === 'object' && Object.keys(parsedData).length > 0) { Object.values(parsedData).forEach(chapters => { if (Array.isArray(chapters)) { chapters.forEach((chapter, index) => { if (typeof chapter === 'string') { chapters[index] = { id: generateUniqueId('ch'), name: chapter }; } else if (typeof chapter === 'object' && (!chapter.id || !chapter.name)) { chapters[index] = { id: chapter.id || generateUniqueId('ch'), name: chapter.name || 'Unnamed Chapter' }; } }); } }); return parsedData; } } catch (e) { console.error(`Error parsing stored syllabus data for ${subject}:`, e); safeRemoveItem(storageKey); } } const defaultSubjectData = defaultSyllabusData[subject]; if (!defaultSubjectData) return null; const formattedDefault = {}; for (const paper in defaultSubjectData) { formattedDefault[paper] = formatDefaultChapters(defaultSubjectData[paper]); } saveSyllabusData(subject, formattedDefault); return formattedDefault; } function saveSyllabusData(subject, data) { const storageKey = LOCAL_STORAGE_SYLLABUS_PREFIX + subject; try { const dataString = JSON.stringify(data); if (!safeSetItem(storageKey, dataString)) { console.error(`Failed to save syllabus data for ${subject} to localStorage.`); } } catch (e) { console.error(`Error stringifying syllabus data for ${subject}:`, e); alert("ত্রুটি: সিলেবাস সংরক্ষণে সমস্যা হয়েছে।"); } }
+
+    /* ========= Content Area & Syllabus Management ========= */
+    function displayWelcome() {
+        if(mainTitle) mainTitle.textContent = "ড্যাশবোর্ড";
+        if (contentArea) {
+            contentArea.innerHTML = welcomeSectionTemplateHTML;
+            const welcomeEl = contentArea.querySelector('.welcome-content');
+            if (welcomeEl) {
+                show(welcomeEl);
+                welcomeEl.classList.add('animate-fadeInUp');
+            }
+        }
+        clearActiveSubject();
+        // Show dashboard sections
+        fadeIn(statsSummarySection);
+        fadeIn(noticeBoardSection);
+        renderNotices(); // Render limited notices
+        fadeIn(contentSectionsWrapper);
+    }
+    function clearActiveSubject() { subjectMenu?.querySelectorAll('li.active').forEach(li => { li.classList.remove('active', 'bg-blue-800', 'dark:bg-gray-700'); }); }
+    function setActiveSubject(selectedLi) { clearActiveSubject(); if(selectedLi) { selectedLi.classList.add('active', 'bg-blue-800', 'dark:bg-gray-700'); } }
+    function getPlaylistData(chapterId) { const storageKey = PLAYLIST_STORAGE_KEY_PREFIX + chapterId; const stored = safeGetItem(storageKey); if (!stored) return { type: null, value: null, url: null }; try { const parsed = JSON.parse(stored); if (parsed && typeof parsed === 'object' && (parsed.value || parsed.url)) { let finalUrl = parsed.url; if (!finalUrl) { if (parsed.type === 'playlistId' && parsed.value) { finalUrl = `https://www.youtube.com/playlist?list=${parsed.value}`; } else if (parsed.type === 'embed' && parsed.value) { const srcMatch = parsed.value.match(/src=["'](https?:\/\/[^"']+)["']/i); if (srcMatch && srcMatch[1]) finalUrl = srcMatch[1]; else finalUrl = null; } } return { type: parsed.type || null, value: parsed.value || null, url: finalUrl, embedCode: parsed.type === 'embed' ? parsed.value : null }; } } catch (e) { console.warn(`Could not parse playlist for chapter ${chapterId}`); } return { type: null, value: null, url: null }; }
+    function extractYoutubeIdOrEmbed(input) { if (!input || typeof input !== 'string') return null; input = input.trim(); try { const url = new URL(input); if ((url.hostname.includes('youtube.com') || url.hostname.includes('youtu.be'))) { if (url.pathname === '/playlist' || url.pathname.startsWith('/playlist/')) { const listId = url.searchParams.get('list'); if (listId && /^[a-zA-Z0-9_-]{13,34}$/.test(listId)) { return { type: 'playlistId', value: listId, url: input }; } } if (url.hostname === 'youtu.be' && url.searchParams.has('list')) { const listId = url.searchParams.get('list'); if (listId && /^[a-zA-Z0-9_-]{13,34}$/.test(listId)) { return { type: 'playlistId', value: listId, url: input }; } } } } catch (e) {} const iframeMatch = input.match(/<iframe[^>]+src=["'](https?:\/\/[^"']+)["']/i); if (iframeMatch && iframeMatch[1]) { const srcUrl = iframeMatch[1]; if (srcUrl.includes('/embed/videoseries') || srcUrl.includes('list=')) { try { const url = new URL(srcUrl); const listId = url.searchParams.get('list'); if (listId && /^[a-zA-Z0-9_-]{13,34}$/.test(listId)) { return { type: 'playlistId', value: listId, url: srcUrl, embedCode: input }; } } catch (e) {} return { type: 'embed', value: input, url: srcUrl }; } } if (/^[a-zA-Z0-9_-]{13,34}$/.test(input)) { return { type: 'playlistId', value: input, url: `https://www.youtube.com/playlist?list=${input}` }; } if (input.startsWith('<iframe') && input.endsWith('>')) { const srcMatch = input.match(/src=["'](https?:\/\/[^"']+)["']/i); const srcUrl = (srcMatch && srcMatch[1]) ? srcMatch[1] : null; return { type: 'embed', value: input, url: srcUrl }; } return null; }
+
+    function renderSyllabus(subject) {
+        const subjectData = getSyllabusDataForSubject(subject);
+        if (!subjectData) { if (contentArea) contentArea.innerHTML = `<p class="text-red-500 dark:text-red-400 p-6 text-center">ত্রুটি: "${sanitizeHTML(subject)}" বিষয়ের সিলেবাস ডেটা খুঁজে পাওয়া যায়নি।</p>`; return; }
+        if(mainTitle) mainTitle.textContent = `${sanitizeHTML(subject)} সিলেবাস`;
+        // Hide dashboard sections
+        hide(statsSummarySection); hide(noticeBoardSection);
+        show(contentSectionsWrapper);
+        if(contentArea) contentArea.innerHTML = ''; show(loadingIndicator);
+
+        setTimeout(() => {
+            hide(loadingIndicator); contentArea.classList.add('animate-fadeInUp');
+            let contentHTML = `<div class="section-header flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 pb-4 border-b border-gray-200 dark:border-gray-700 mb-6"> <h2 id="syllabus-section-title" class="flex gap-2.5 items-center text-indigo-700 dark:text-indigo-300 text-xl md:text-2xl font-bangla font-bold"> <i class="fas fa-stream fa-fw"></i> ${sanitizeHTML(subject)} - অধ্যায়সমূহ </h2> </div>`;
+            Object.entries(subjectData).forEach(([paper, chapters], paperIndex) => {
+                 if (!Array.isArray(chapters)) chapters = []; const sanitizedPaper = sanitizeHTML(paper);
+                 contentHTML += `<div class="mb-8 syllabus-section animate-fadeInUp" style="animation-delay: ${paperIndex * 80}ms;">
+                    <h3 class="text-lg md:text-xl mb-5 font-bold text-blue-800 dark:text-blue-300 font-bangla">${sanitizedPaper}</h3>
+                    <div class="overflow-x-auto shadow-lg rounded-xl border border-gray-200 dark:border-gray-700/70">
+                        <table class="syllabus-table bg-white dark:bg-gray-800/80">
+                            <thead class="text-gray-600 dark:text-gray-300 uppercase text-xs"> <tr> <th class="text-left">অধ্যায়</th> <th class="text-center w-44 md:w-52">প্লে-লিস্ট / অ্যাকশন</th> </tr> </thead>
+                            <tbody class="divide-y divide-gray-200 dark:divide-gray-700">`;
+                 if (chapters.length === 0) { contentHTML += `<tr><td colspan="2" class="text-center py-6 text-gray-500 dark:text-gray-400 italic">এই পত্রে এখনো কোনো অধ্যায় ${isAdmin ? 'যুক্ত করা হয়নি' : 'নেই'}।</td></tr>`; }
+                 else { chapters.forEach((chapter, i) => { if (typeof chapter !== 'object' || !chapter.id || !chapter.name) { return; } const chapterId = chapter.id; const chapterName = chapter.name; const playlistData = getPlaylistData(chapterId); const hasPlaylist = playlistData && (playlistData.value || playlistData.url || playlistData.embedCode); const sanitizedChapterName = sanitizeHTML(chapterName);
+                         contentHTML += `<tr class="hover:bg-indigo-50 dark:hover:bg-gray-700/50 transition duration-150 ease-in-out group">
+                            <td class="chapter-cell">
+                                <div class="chapter-name-display"> <span class="font-semibold text-gray-500 dark:text-gray-400 mr-2">${(i + 1).toLocaleString('bn-BD')}.</span> <span class="text-gray-800 dark:text-gray-200 group-hover:text-indigo-800 dark:group-hover:text-indigo-300 transition-colors">${sanitizedChapterName}</span> ${hasPlaylist ? '<i class="fas fa-circle-play text-green-500 dark:text-green-400 ml-2.5 animate-pulseGlow inline-block flex-shrink-0" title="প্লে-লিস্ট যুক্ত আছে"></i>' : ''} </div>
+                                ${isAdmin ? `<div class="chapter-admin-buttons"> <button class="btn-edit-chapter btn btn-xs bg-blue-500 hover:bg-blue-600 text-white px-2 py-1 rounded-md" title="অধ্যায় সম্পাদনা" data-subject="${subject}" data-paper="${paper}" data-chapter-id="${chapterId}" data-current-name="${sanitizedChapterName}"> <i class="fas fa-pencil-alt text-xs"></i> </button> <button class="btn-delete-chapter btn btn-xs bg-red-500 hover:bg-red-600 text-white px-2 py-1 rounded-md" title="অধ্যায় মুছুন" data-subject="${subject}" data-paper="${paper}" data-chapter-id="${chapterId}" data-chapter-name="${sanitizedChapterName}"> <i class="fas fa-trash-alt text-xs"></i> </button> </div>` : ''}
+                            </td>
+                            <td class="action-buttons">
+                                <div class="flex flex-col sm:flex-row gap-2 justify-center items-center">`;
+                         if (hasPlaylist) { contentHTML += `<button class="btn-view-playlist btn btn-xs sm:btn-sm bg-green-500 hover:bg-green-600 text-white rounded-md font-semibold flex items-center justify-center gap-1.5 transition shadow hover:shadow-md" data-chapter-id="${chapterId}" data-chapter-name="${sanitizedChapterName}" title="প্লে-লিস্ট দেখুন"><i class="fab fa-youtube"></i> <span class="hidden sm:inline">দেখুন</span></button>`; }
+                         else if (!isAdmin) { contentHTML += `<span class="text-xs text-gray-400 dark:text-gray-500 italic">N/A</span>`; }
+                         if (isAdmin) { const playlistButtonClass = hasPlaylist ? 'bg-yellow-500 hover:bg-yellow-600' : 'bg-indigo-500 hover:bg-indigo-600'; const playlistIconClass = hasPlaylist ? 'fa-edit' : 'fa-plus'; const playlistButtonText = hasPlaylist ? 'Edit' : 'Add'; const playlistTitleText = hasPlaylist ? 'প্লে-লিস্ট সম্পাদনা' : 'প্লে-লিস্ট যুক্ত করুন'; contentHTML += `<button class="btn-edit-playlist btn btn-xs sm:btn-sm ${playlistButtonClass} text-white rounded-md font-semibold flex items-center justify-center gap-1.5 transition shadow hover:shadow-md" data-chapter-id="${chapterId}" data-chapter-name="${sanitizedChapterName}" data-subject="${subject}" title="${playlistTitleText}"><i class="fas ${playlistIconClass}"></i> <span class="hidden sm:inline">${playlistButtonText}</span></button>`; }
+                         contentHTML += `</div></td></tr>`; }); }
+                contentHTML += `</tbody></table></div>`;
+                if (isAdmin) { contentHTML += `<div class="mt-5 text-right"> <button class="btn-add-chapter btn btn-sm bg-green-600 hover:bg-green-700 text-white px-4 py-1.5 rounded-md font-semibold flex items-center gap-1.5 shadow hover:shadow-md transform hover:-translate-y-0.5" data-subject="${subject}" data-paper="${paper}"> <i class="fas fa-plus-circle"></i> নতুন অধ্যায় (${sanitizedPaper}) </button> </div>`; }
+                contentHTML += `</div>`; });
+            if (contentArea) { contentArea.innerHTML = contentHTML; setTimeout(() => contentArea.classList.remove('animate-fadeInUp'), 600); addSyllabusButtonListeners(); }
+        }, 150);
+    }
+
+
+    /* ====== Modal Management (Unchanged) ====== */
+    function openModal(title, contentHTML, type = 'default', triggerElement = null) { if (!modalTemplate || !modalTitleEl || !modalBody || !modalFooter) return; currentModalTrigger = triggerElement || document.activeElement; modalTitleEl.textContent = title; modalBody.innerHTML = contentHTML; const modalContent = modalTemplate.querySelector('.modal-content'); modalContent.classList.remove('max-w-xs','max-w-sm','max-w-md','max-w-lg','max-w-xl','max-w-2xl','max-w-3xl','max-w-4xl','max-w-5xl'); if (type === 'playlistView') modalContent.classList.add('max-w-4xl'); else if (type === 'noticeEdit' || type === 'playlistEdit' || type === 'chapterEdit') modalContent.classList.add('max-w-lg'); else modalContent.classList.add('max-w-2xl'); const dynamicButtons = modalFooter.querySelectorAll('.dynamic-btn'); dynamicButtons.forEach(btn => btn.remove()); hide(modalFooter); if (type === 'playlistEdit') { modalFooter.insertAdjacentHTML('beforeend', `<button type="button" id="remove-playlist-btn" class="dynamic-btn btn btn-sm bg-red-500 hover:bg-red-600 text-white hidden"><i class="fas fa-trash mr-1.5"></i> লিংক মুছুন</button>`); modalFooter.insertAdjacentHTML('beforeend', `<button type="button" id="save-playlist-btn" class="dynamic-btn btn btn-sm bg-green-600 hover:bg-green-700 text-white"><i class="fas fa-save mr-1.5"></i> সংরক্ষণ</button>`); show(modalFooter); } else if (type === 'noticeEdit') { modalFooter.insertAdjacentHTML('beforeend', `<button type="button" id="save-notice-btn" class="dynamic-btn btn btn-sm bg-blue-600 hover:bg-blue-700 text-white"><i class="fas fa-save mr-1.5"></i> নোটিশ সংরক্ষণ</button>`); show(modalFooter); } else if (type === 'chapterEdit') { modalFooter.insertAdjacentHTML('beforeend', `<button type="button" id="save-chapter-btn" class="dynamic-btn btn btn-sm bg-blue-600 hover:bg-blue-700 text-white"><i class="fas fa-save mr-1.5"></i> অধ্যায় সংরক্ষণ</button>`); show(modalFooter); } else if (type === 'playlistView') { hide(modalFooter); } else { show(modalFooter); } show(modalTemplate); modalTemplate.classList.add('flex'); document.body.style.overflow = 'hidden'; const focusableElements = modalTemplate.querySelectorAll(FOCUSABLE_ELEMENTS_SELECTOR); const firstFocusable = focusableElements[0]; setTimeout(() => firstFocusable?.focus(), 100); modalTemplate.addEventListener('keydown', trapFocus); attachModalContentListeners(type); }
+    function closeModal() { if (!modalTemplate) return; fadeOut(modalTemplate, 250, () => { modalTemplate.classList.remove('flex'); if(modalBody) modalBody.innerHTML = ''; if(modalTitleEl) modalTitleEl.textContent = 'Modal Title'; document.body.style.overflow = ''; currentModalTrigger?.focus(); currentModalTrigger = null; modalTemplate.removeEventListener('keydown', trapFocus); }); }
+    function trapFocus(e) { if (!modalTemplate || modalTemplate.classList.contains('hidden')) return; if (e.key !== 'Tab') return; const focusableElements = Array.from(modalTemplate.querySelectorAll(FOCUSABLE_ELEMENTS_SELECTOR)).filter(el => el.offsetParent !== null); if (focusableElements.length === 0) return; const firstFocusable = focusableElements[0]; const lastFocusable = focusableElements[focusableElements.length - 1]; if (e.shiftKey) { if (document.activeElement === firstFocusable) { lastFocusable?.focus(); e.preventDefault(); } } else { if (document.activeElement === lastFocusable) { firstFocusable?.focus(); e.preventDefault(); } } }
+    function attachModalContentListeners(type) { const savePlaylistBtn = modalFooter.querySelector('#save-playlist-btn'); const removePlaylistBtn = modalFooter.querySelector('#remove-playlist-btn'); const saveNoticeBtn = modalFooter.querySelector('#save-notice-btn'); const saveChapterBtn = modalFooter.querySelector('#save-chapter-btn'); if (type === 'playlistEdit') { savePlaylistBtn?.addEventListener('click', savePlaylist); removePlaylistBtn?.addEventListener('click', () => removePlaylist(false)); const chapterIdInput = modalBody.querySelector('#edit-chapter-id-playlist'); if (chapterIdInput?.value && removePlaylistBtn) { const playlistData = getPlaylistData(chapterIdInput.value); if (playlistData && (playlistData.value || playlistData.url || playlistData.embedCode)) { show(removePlaylistBtn); } else { hide(removePlaylistBtn); } } else if (removePlaylistBtn) { hide(removePlaylistBtn); } } else if (type === 'noticeEdit') { saveNoticeBtn?.addEventListener('click', saveNotice); } else if (type === 'chapterEdit') { saveChapterBtn?.addEventListener('click', handleSaveChapter); } else if (type === 'playlistView') { const enterFullscreenBtn = modalBody.querySelector('#enter-fullscreen'); enterFullscreenBtn?.addEventListener('click', handleEnterFullscreen); } }
+
+    /* ====== YouTube Player Enhancements (Unchanged) ====== */
+    function setupYouTubePlayer(chapterId, chapterTitle) { const playlistData = getPlaylistData(chapterId); if (!playlistData || (!playlistData.value && !playlistData.url && !playlistData.embedCode)) { showTemporaryMessage(document.body, "ত্রুটি: প্লে-লিস্ট ডেটা পাওয়া যায়নি।", false); return; } const playerContainer = modalBody.querySelector('#youtube-player-container'); if (!playerContainer) return; const placeholder = playerContainer.querySelector('.player-placeholder'); let embedCode = ''; const uniqueIframeId = `youtube-iframe-${Date.now()}`; const sanitizedTitle = sanitizeHTML(chapterTitle); if (playlistData.type === 'playlistId' && playlistData.value) { embedCode = `<iframe id="${uniqueIframeId}" loading="lazy" width="100%" height="100%" src="https://www.youtube.com/embed/videoseries?list=${playlistData.value}&autoplay=0&rel=0&modestbranding=1" title="YouTube playlist player for ${sanitizedTitle}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>`; } else if (playlistData.type === 'embed' && playlistData.embedCode && playlistData.embedCode.startsWith('<iframe')) { let embedValue = playlistData.embedCode; embedValue = embedValue.replace(/width=["']?\d+[%px]?["']?/gi, 'width="100%"'); embedValue = embedValue.replace(/height=["']?\d+[%px]?["']?/gi, 'height="100%"'); if (!embedValue.includes('allowfullscreen')) { embedValue = embedValue.replace(/<iframe/i, '<iframe allowfullscreen'); } if (!embedValue.includes(' title=')) { embedValue = embedValue.replace(/<iframe/i, `<iframe title="YouTube player for ${sanitizedTitle}"`); } embedValue = embedValue.replace(/<iframe/i, `<iframe id="${uniqueIframeId}" loading="lazy"`); embedCode = embedValue; } else if (playlistData.url && playlistData.url.includes('youtube.com/embed')) { embedCode = `<iframe id="${uniqueIframeId}" loading="lazy" width="100%" height="100%" src="${sanitizeHTML(playlistData.url)}" title="YouTube player for ${sanitizedTitle}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>`; } else { embedCode = `<div class="p-4 bg-red-100 dark:bg-red-900/50 text-red-700 dark:text-red-300 rounded text-center h-full flex items-center justify-center">ত্রুটি: প্লে-লিস্ট লোড করা যায়নি। ইনপুট চেক করুন।</div>`; hide(playerContainer.querySelector('.fullscreen-controls')); } if (placeholder) placeholder.insertAdjacentHTML('afterend', embedCode); hide(placeholder); const iframe = document.getElementById(uniqueIframeId); if (iframe) { iframe.setAttribute('webkitallowfullscreen', 'true'); iframe.setAttribute('mozallowfullscreen', 'true'); iframe.dataset.originalEmbed = embedCode; } }
+    function handleEnterFullscreen() { const playerContainer = modalBody?.querySelector('#youtube-player-container'); const iframe = playerContainer?.querySelector('iframe'); if (!iframe || !youtubeFullscreenOverlay || !youtubeFullscreenContainer) return; const embedCode = iframe.dataset.originalEmbed || iframe.outerHTML; youtubeFullscreenContainer.innerHTML = embedCode; youtubeFullscreenOverlay.classList.add('active'); show(youtubeFullscreenOverlay); document.body.style.overflow = 'hidden'; }
+    function handleExitFullscreen() { if (!youtubeFullscreenOverlay || !youtubeFullscreenContainer) return; youtubeFullscreenOverlay.classList.remove('active'); hide(youtubeFullscreenOverlay); youtubeFullscreenContainer.innerHTML = ''; document.body.style.overflow = ''; if (modalTemplate && !modalTemplate.classList.contains('hidden')) { document.body.style.overflow = 'hidden'; } }
+
+    /* ====== Syllabus Actions & Playlist & Chapter Handling (Unchanged) ====== */
+    function addSyllabusButtonListeners() { contentArea?.querySelectorAll('.btn-view-playlist').forEach(btn => { btn.addEventListener('click', (e) => { const chapterId = btn.getAttribute('data-chapter-id'); const chapterName = btn.getAttribute('data-chapter-name'); openModal(`প্লে-লিস্ট: ${sanitizeHTML(chapterName)}`, playlistModalContentHTML, 'playlistView', e.currentTarget); setTimeout(() => { setupYouTubePlayer(chapterId, chapterName); }, 50); }); }); if (isAdmin) { contentArea?.querySelectorAll('.btn-edit-playlist').forEach(btn => { btn.addEventListener('click', (e) => { const chapterId = btn.getAttribute('data-chapter-id'); const chapterName = btn.getAttribute('data-chapter-name'); const subject = btn.getAttribute('data-subject'); openAdminPlaylistModal(chapterId, chapterName, subject, e.currentTarget); }); }); contentArea?.querySelectorAll('.btn-add-chapter').forEach(btn => { btn.addEventListener('click', (e) => { const subject = btn.getAttribute('data-subject'); const paper = btn.getAttribute('data-paper'); openAdminChapterModal(subject, paper, null, '', e.currentTarget); }); }); contentArea?.querySelectorAll('.btn-edit-chapter').forEach(btn => { btn.addEventListener('click', (e) => { const subject = btn.getAttribute('data-subject'); const paper = btn.getAttribute('data-paper'); const chapterId = btn.getAttribute('data-chapter-id'); const currentName = btn.getAttribute('data-current-name'); openAdminChapterModal(subject, paper, chapterId, currentName, e.currentTarget); }); }); contentArea?.querySelectorAll('.btn-delete-chapter').forEach(btn => { btn.addEventListener('click', (e) => { const subject = btn.getAttribute('data-subject'); const paper = btn.getAttribute('data-paper'); const chapterId = btn.getAttribute('data-chapter-id'); const chapterName = btn.getAttribute('data-chapter-name'); handleDeleteChapter(subject, paper, chapterId, chapterName); }); }); } }
+    function openAdminPlaylistModal(chapterId, chapterName, subject, triggerElement) { openModal('প্লে-লিস্ট যুক্ত/সম্পাদনা', adminPlaylistModalContentHTML, 'playlistEdit', triggerElement); setTimeout(() => { const chapterNameEl = modalBody.querySelector('#admin-modal-chapter-name'); const chapterIdInput = modalBody.querySelector('#edit-chapter-id-playlist'); const subjectInput = modalBody.querySelector('#edit-subject-playlist'); const urlInput = modalBody.querySelector('#playlist-url'); const messageEl = modalBody.querySelector('#admin-playlist-message'); const removeBtn = modalFooter.querySelector('#remove-playlist-btn'); if (chapterNameEl) chapterNameEl.textContent = sanitizeHTML(chapterName); if (chapterIdInput) chapterIdInput.value = chapterId; if (subjectInput) subjectInput.value = subject; if (messageEl) hide(messageEl); const playlistData = getPlaylistData(chapterId); if (urlInput) urlInput.value = playlistData.embedCode || playlistData.url || ''; if (removeBtn) { if (playlistData && (playlistData.value || playlistData.url || playlistData.embedCode)) show(removeBtn); else hide(removeBtn); } }, 50); }
+    function savePlaylist() { const chapterId = modalBody.querySelector('#edit-chapter-id-playlist')?.value; const subject = modalBody.querySelector('#edit-subject-playlist')?.value; const chapterName = modalBody.querySelector('#admin-modal-chapter-name')?.textContent; const userInput = modalBody.querySelector('#playlist-url')?.value.trim(); const messageEl = modalBody.querySelector('#admin-playlist-message'); const removeBtn = modalFooter.querySelector('#remove-playlist-btn'); if (!chapterId || !subject || !chapterName || !messageEl) { showTemporaryMessage(messageEl, 'একটি অভ্যন্তরীণ ত্রুটি ঘটেছে।', false); return; } hide(messageEl); const wasExisting = !!(getPlaylistData(chapterId).url || getPlaylistData(chapterId).embedCode); if (!userInput) { removePlaylist(true); return; } const parsed = extractYoutubeIdOrEmbed(userInput); if (!parsed || (!parsed.value && parsed.type !== 'embed')) { showTemporaryMessage(messageEl, "অবৈধ ইউটিউব লিংক বা Embed কোড।", false); return; } const dataToStore = JSON.stringify({ type: parsed.type, value: parsed.value, url: parsed.url, embedCode: parsed.embedCode }); const storageKey = PLAYLIST_STORAGE_KEY_PREFIX + chapterId; if (safeSetItem(storageKey, dataToStore)) { showTemporaryMessage(messageEl, "প্লে-লিস্ট লিংক সংরক্ষিত হয়েছে!", true); if (removeBtn) show(removeBtn); const actionText = wasExisting ? 'আপডেট' : 'যুক্ত'; const noticeTitle = `প্লে-লিস্ট ${actionText}: ${sanitizeHTML(subject)}`; const noticeContent = `"${sanitizeHTML(chapterName)}" (${sanitizeHTML(subject)}) অধ্যায়ের প্লে-লিস্ট ${actionText} করা হয়েছে।`; addAutomaticNotice(noticeTitle, noticeContent); setTimeout(() => { refreshCurrentSyllabusView(); updateStatsSummary(); closeModal(); }, 1200); } else { showTemporaryMessage(messageEl, `ত্রুটি: লিংক সংরক্ষণ করা যায়নি।`, false); } }
+    function removePlaylist(silent = false) { const chapterId = modalBody.querySelector('#edit-chapter-id-playlist')?.value; const messageEl = modalBody.querySelector('#admin-playlist-message'); const removeBtn = modalFooter.querySelector('#remove-playlist-btn'); const urlInput = modalBody.querySelector('#playlist-url'); if (!chapterId || !messageEl) return; if (!silent && !confirm('আপনি কি নিশ্চিতভাবে এই প্লে-লিস্ট লিংকটি মুছে ফেলতে চান?')) return; const storageKey = PLAYLIST_STORAGE_KEY_PREFIX + chapterId; if (safeRemoveItem(storageKey)) { if (urlInput) urlInput.value = ''; if (!silent) showTemporaryMessage(messageEl, "প্লে-লিস্ট লিংক মুছে ফেলা হয়েছে!", true); if (removeBtn) hide(removeBtn); if (!silent) { const subject = modalBody.querySelector('#edit-subject-playlist')?.value || '?'; const chapterName = modalBody.querySelector('#admin-modal-chapter-name')?.textContent || '?'; const noticeTitle = `প্লে-লিস্ট মুছে ফেলা: ${sanitizeHTML(subject)}`; const noticeContent = `"${sanitizeHTML(chapterName)}" (${sanitizeHTML(subject)}) অধ্যায়ের প্লে-লিস্ট লিংক মুছে ফেলা হয়েছে।`; addAutomaticNotice(noticeTitle, noticeContent); } setTimeout(() => { refreshCurrentSyllabusView(); updateStatsSummary(); if (!silent) closeModal(); }, silent ? 0 : 1200); } else { if (!silent) showTemporaryMessage(messageEl, `ত্রুটি: লিংক মুছে ফেলা যায়নি।`, false); } }
+    function openAdminChapterModal(subject, paper, chapterId = null, currentName = '', triggerElement = null) { const isEditing = chapterId !== null; const modalTitle = isEditing ? 'অধ্যায়ের নাম সম্পাদনা করুন' : 'নতুন অধ্যায় যুক্ত করুন'; openModal(modalTitle, adminChapterModalContentHTML, 'chapterEdit', triggerElement); setTimeout(() => { const form = modalBody.querySelector('#chapter-form'); const nameInput = modalBody.querySelector('#chapter-name'); const subjectInput = modalBody.querySelector('#edit-chapter-subject'); const paperInput = modalBody.querySelector('#edit-chapter-paper'); const idInput = modalBody.querySelector('#edit-chapter-id'); const messageEl = modalBody.querySelector('#admin-chapter-message'); if (!form || !nameInput || !subjectInput || !paperInput || !idInput || !messageEl) return; form.reset(); hide(messageEl); subjectInput.value = subject; paperInput.value = paper; idInput.value = isEditing ? chapterId : ''; nameInput.value = isEditing ? currentName : ''; nameInput.focus(); }, 50); }
+    function handleSaveChapter() { const subject = modalBody.querySelector('#edit-chapter-subject')?.value; const paper = modalBody.querySelector('#edit-chapter-paper')?.value; const chapterId = modalBody.querySelector('#edit-chapter-id')?.value; const newName = modalBody.querySelector('#chapter-name')?.value.trim(); const messageEl = modalBody.querySelector('#admin-chapter-message'); const isEditing = chapterId !== ''; if (!subject || !paper || !messageEl) { showTemporaryMessage(messageEl, 'একটি অভ্যন্তরীণ ত্রুটি ঘটেছে।', false); return; } if (!newName) { showTemporaryMessage(messageEl, 'অধ্যায়ের নাম খালি রাখা যাবে না।', false); return; } hide(messageEl); let subjectData = getSyllabusDataForSubject(subject); if (!subjectData || !subjectData[paper]) { showTemporaryMessage(messageEl, 'সিলেবাস ডেটা খুঁজে পাওয়া যায়নি।', false); return; } try { if (isEditing) { const chapterIndex = subjectData[paper].findIndex(ch => ch.id === chapterId); if (chapterIndex > -1) { subjectData[paper][chapterIndex].name = newName; } else { throw new Error("অধ্যায় সম্পাদনার জন্য খুঁজে পাওয়া যায়নি।"); } } else { const newChapter = { id: generateUniqueId('ch'), name: newName }; subjectData[paper].push(newChapter); } saveSyllabusData(subject, subjectData); showTemporaryMessage(messageEl, `অধ্যায় ${isEditing ? 'আপডেট' : 'যুক্ত'} করা হয়েছে!`, true); const actionText = isEditing ? 'সম্পাদনা' : 'যুক্ত'; const noticeTitle = `সিলেবাস আপডেট: ${sanitizeHTML(subject)}`; const noticeContent = `"${sanitizeHTML(newName)}" অধ্যায়টি (${sanitizeHTML(subject)} - ${sanitizeHTML(paper)}) ${actionText} করা হয়েছে।`; addAutomaticNotice(noticeTitle, noticeContent); setTimeout(() => { refreshCurrentSyllabusView(); closeModal(); }, 1200); } catch (error) { console.error("Error saving chapter:", error); showTemporaryMessage(messageEl, `ত্রুটি: ${error.message || 'অধ্যায় সংরক্ষণ করা যায়নি।'}`, false); } }
+    function handleDeleteChapter(subject, paper, chapterId, chapterName) { if (!isAdmin) return; if (confirm(`আপনি কি নিশ্চিতভাবে "${sanitizeHTML(chapterName)}" (${sanitizeHTML(paper)}) অধ্যায়টি মুছে ফেলতে চান?\nএর সাথে যুক্ত প্লে-লিস্ট লিংকও মুছে যাবে!`)) { let subjectData = getSyllabusDataForSubject(subject); if (!subjectData || !subjectData[paper]) { alert('ত্রুটি: সিলেবাস ডেটা খুঁজে পাওয়া যায়নি।'); return; } const initialLength = subjectData[paper].length; subjectData[paper] = subjectData[paper].filter(ch => ch.id !== chapterId); if (subjectData[paper].length < initialLength) { saveSyllabusData(subject, subjectData); const playlistStorageKey = PLAYLIST_STORAGE_KEY_PREFIX + chapterId; safeRemoveItem(playlistStorageKey); const noticeTitle = `সিলেবাস আপডেট: ${sanitizeHTML(subject)}`; const noticeContent = `"${sanitizeHTML(chapterName)}" অধ্যায়টি (${sanitizeHTML(subject)} - ${sanitizeHTML(paper)}) মুছে ফেলা হয়েছে।`; addAutomaticNotice(noticeTitle, noticeContent); refreshCurrentSyllabusView(); updateStatsSummary(); } else { alert('ত্রুটি: অধ্যায়টি মোছার জন্য খুঁজে পাওয়া যায়নি।'); } } }
+    function refreshCurrentSyllabusView() { const activeSubjectLink = subjectMenu?.querySelector('li.active a'); if (activeSubjectLink && contentArea) { const subject = activeSubjectLink.getAttribute('data-subject'); if (subject) { const isWelcomeVisible = !!contentArea.querySelector('.welcome-content'); if (!isWelcomeVisible) { renderSyllabus(subject); } } } }
+
+    /* ========== Notice Board & Auto Notice (Limit Display) ========== */
+    function loadNotices() { notices.length = 0; const stored = safeGetItem(NOTICE_STORAGE_KEY); if (stored) { try { const parsedNotices = JSON.parse(stored); if (Array.isArray(parsedNotices)) { const validNotices = parsedNotices.filter(n => n && n.id && n.title && n.content); validNotices.sort((a, b) => (b.timestamp || 0) - (a.timestamp || 0)); notices.push(...validNotices); } } catch (e) { console.error("Load notices parsing error:", e); safeRemoveItem(NOTICE_STORAGE_KEY); } } }
+    function renderNotices() { loadNotices(); if (!noticeBoard) return; noticeBoard.innerHTML = ''; const noticesToDisplay = notices.slice(0, NOTICE_DISPLAY_LIMIT); if (noticesToDisplay.length === 0) { show(noNoticesMsg); hide(noticeLimitIndicator); return; } hide(noNoticesMsg); noticesToDisplay.forEach((notice, index) => { const noticeEl = document.createElement('div'); const isUpdateNotice = notice.id.startsWith('update-'); const bgColor = isUpdateNotice ? 'bg-blue-50 dark:bg-gray-800/60' : 'bg-yellow-50 dark:bg-gray-800/80'; const borderColor = isUpdateNotice ? 'border-blue-400 dark:border-blue-500' : 'border-yellow-400 dark:border-yellow-500'; const titleColor = isUpdateNotice ? 'text-blue-800 dark:text-blue-300' : 'text-yellow-800 dark:text-yellow-300'; const iconClass = isUpdateNotice ? 'fas fa-sync-alt text-blue-500' : 'fas fa-bullhorn text-yellow-500 dark:text-yellow-400'; noticeEl.className = `notice-item ${bgColor} border-l-4 ${borderColor} rounded-r-lg p-4 shadow-md hover:shadow-lg transition-shadow duration-200 animate-fadeInUp`; noticeEl.style.animationDelay = `${index * 45}ms`; noticeEl.setAttribute('data-id', notice.id); let formattedDate = 'Unknown date'; try { const dateObj = new Date(notice.timestamp || Date.now()); formattedDate = dateObj.toLocaleDateString('bn-BD', { day: '2-digit', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit', hour12: true }); } catch (e) {} const showAdminControls = isAdmin && !isUpdateNotice; noticeEl.innerHTML = `<div class="flex flex-col sm:flex-row justify-between items-start gap-2 mb-2"> <h4 class="text-base font-bold ${titleColor} flex-1 flex items-center gap-2 break-words"> <i class="${iconClass} fa-fw" aria-hidden="true"></i><span>${sanitizeHTML(notice.title)}</span> </h4> ${showAdminControls ? `<div class="notice-actions flex gap-2 flex-shrink-0 mt-2 sm:mt-0"> <button class="btn-edit-notice btn btn-xs bg-yellow-400 hover:bg-yellow-500 text-gray-800 px-2 py-1 rounded-md" title="সম্পাদনা করুন"><i class="fas fa-edit"></i></button> <button class="btn-delete-notice btn btn-xs bg-red-500 hover:bg-red-600 text-white px-2 py-1 rounded-md" title="মুছে ফেলুন"><i class="fas fa-trash"></i></button> </div>` : ''} </div> <div class="text-gray-700 dark:text-gray-300 text-sm mb-3 prose dark:prose-invert max-w-none break-words leading-relaxed">${sanitizeHTML(notice.content).replace(/\n/g, '<br>')}</div> ${notice.link ? `<div class="notice-link mt-3 pt-2 border-t border-gray-200 dark:border-gray-600/50"><a href="${sanitizeHTML(notice.link)}" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 text-sm text-teal-600 dark:text-teal-400 hover:text-indigo-700 dark:hover:text-indigo-300 underline transition break-all"><i class="fas fa-link" aria-hidden="true"></i> লিংক দেখুন <i class="fas fa-external-link-alt text-xs opacity-80" aria-hidden="true"></i></a></div>` : ''} <div class="text-xs text-gray-500 dark:text-gray-400 text-right mt-3 pt-2 ${notice.link ? '' : 'border-t border-gray-200 dark:border-gray-600/50'}"> প্রকাশিত: ${formattedDate} </div>`; if (showAdminControls) { const editBtn = noticeEl.querySelector('.btn-edit-notice'); const deleteBtn = noticeEl.querySelector('.btn-delete-notice'); editBtn?.addEventListener('click', (e) => openAdminNoticeModal(notice.id, e.currentTarget)); deleteBtn?.addEventListener('click', () => deleteNotice(notice.id)); } noticeBoard.appendChild(noticeEl); }); if (notices.length > NOTICE_DISPLAY_LIMIT && noticeLimitIndicator) { show(noticeLimitIndicator); } else if (noticeLimitIndicator) { hide(noticeLimitIndicator); } }
+    function saveNoticesToStorage() { notices.sort((a, b) => (b.timestamp || 0) - (a.timestamp || 0)); safeSetItem(NOTICE_STORAGE_KEY, JSON.stringify(notices)); }
+    function addAutomaticNotice(title, content) { if (!isAdmin) return; const newNotice = { id: `update-${Date.now()}-${Math.random().toString(16).slice(2, 8)}`, title: title, content: content, link: null, timestamp: Date.now() }; notices.unshift(newNotice); saveNoticesToStorage(); renderNotices(); }
+    function openAdminNoticeModal(noticeId = null, triggerElement = null) { const isEditing = noticeId !== null; const modalTitle = isEditing ? 'নোটিশ সম্পাদনা করুন' : 'নতুন নোটিশ যোগ করুন'; openModal(modalTitle, adminNoticeModalContentHTML, 'noticeEdit', triggerElement); setTimeout(() => { const form = modalBody.querySelector('#notice-form'); const titleInput = modalBody.querySelector('#notice-title'); const contentInput = modalBody.querySelector('#notice-content'); const linkInput = modalBody.querySelector('#notice-link'); const editIdInput = modalBody.querySelector('#edit-notice-id'); const messageEl = modalBody.querySelector('#admin-notice-message'); if (!form || !editIdInput || !messageEl) return; form.reset(); hide(messageEl); editIdInput.value = ''; if (isEditing) { const notice = notices.find(n => n.id === noticeId); if (!notice || notice.id.startsWith('update-')) { showTemporaryMessage(messageEl, "এই নোটিশটি সম্পাদনা করা যাবে না।", false); setTimeout(closeModal, 1500); return; } editIdInput.value = notice.id; if (titleInput) titleInput.value = notice.title || ''; if (contentInput) contentInput.value = notice.content || ''; if (linkInput) linkInput.value = notice.link || ''; } titleInput?.focus(); }, 50); }
+    function saveNotice() { const id = modalBody.querySelector('#edit-notice-id')?.value; const title = modalBody.querySelector('#notice-title')?.value.trim(); const content = modalBody.querySelector('#notice-content')?.value.trim(); const link = modalBody.querySelector('#notice-link')?.value.trim(); const messageEl = modalBody.querySelector('#admin-notice-message'); const isEditing = id !== ''; if (!messageEl) return; hide(messageEl); if (!title || !content) { showTemporaryMessage(messageEl, "শিরোনাম এবং বিবরণ অবশ্যই পূরণ করতে হবে।", false); return; } if (link && !link.match(/^https?:\/\/[^\s$.?#].[^\s]*$/i)) { showTemporaryMessage(messageEl, "প্রদত্ত লিংকটি সঠিক ফরম্যাটে নেই। (http:// or https:// প্রয়োজন)", false); return; } const noticeData = { title, content, link: link || null, timestamp: Date.now() }; if (isEditing) { const index = notices.findIndex(n => n.id === id); if (index > -1 && !notices[index].id.startsWith('update-')) { notices[index] = { ...notices[index], ...noticeData }; } else { showTemporaryMessage(messageEl, "সম্পাদনার জন্য নোটিশ খুঁজে পাওয়া যায়নি বা এটি একটি স্বয়ংক্রিয় নোটিশ!", false); return; } } else { noticeData.id = `notice-${Date.now()}-${Math.random().toString(16).slice(2, 8)}`; notices.unshift(noticeData); } saveNoticesToStorage(); renderNotices(); showTemporaryMessage(messageEl, `নোটিশ ${isEditing ? 'সফলভাবে আপডেট' : 'সফলভাবে সংরক্ষিত'} হয়েছে!`, true); setTimeout(closeModal, 1500); }
+    function deleteNotice(noticeId) { const noticeIndex = notices.findIndex(n => n.id === noticeId); if (noticeIndex === -1) { alert('ত্রুটি: নোটিশ খুঁজে পাওয়া যায়নি।'); return; } const notice = notices[noticeIndex]; if (notice.id.startsWith('update-')) { alert("স্বয়ংক্রিয়ভাবে তৈরি নোটিশ মুছে ফেলা যাবে না।"); return; } if (confirm(`আপনি কি নিশ্চিতভাবে "${sanitizeHTML(notice.title)}" নোটিশটি মুছে ফেলতে চান?`)) { notices.splice(noticeIndex, 1); saveNoticesToStorage(); renderNotices(); } }
+
+    /* ========== Link Printing ========== */
+    function generatePrintableLinksHTML() {
+        let printHTML = `<div class="print-header">
+                            <h1 class="print-title">HSC 2025 পোর্টাল - ইউটিউব প্লে-লিস্ট লিংক</h1>
+                            <p class="print-subtitle">Generated: ${new Date().toLocaleString('bn-BD')}</p>
+                         </div>`;
+        let foundLinks = false;
+        const subjects = Object.keys(defaultSyllabusData); // Get list of all potential subjects
+
+        subjects.forEach(subject => {
+            const subjectData = getSyllabusDataForSubject(subject);
+            if (!subjectData) return; // Skip if subject data couldn't be loaded
+
+            let subjectHasLinks = false;
+            let subjectHTML = `<h2 class="print-subject-header">${sanitizeHTML(subject)}</h2>`;
+            let paperHTML = '';
+
+            Object.entries(subjectData).forEach(([paper, chapters]) => {
+                 if (!Array.isArray(chapters) || chapters.length === 0) return;
+
+                 let paperHasLinks = false;
+                 let chapterListHTML = '<ul class="print-links-list">';
+
+                 chapters.forEach((chapter, i) => {
+                      if (typeof chapter !== 'object' || !chapter.id || !chapter.name) return;
+                      const playlistData = getPlaylistData(chapter.id);
+                      // Use playlistData.url which holds the direct URL if available
+                      const linkUrl = playlistData?.url || (playlistData?.type === 'playlistId' ? `https://www.youtube.com/playlist?list=${playlistData.value}` : null);
+
+                      if(linkUrl) {
+                          paperHasLinks = true;
+                          chapterListHTML += `<li class="print-chapter-item">
+                                                <span class="print-chapter-name">${(i + 1).toLocaleString('bn-BD')}. ${sanitizeHTML(chapter.name)}</span>
+                                                <a href="${sanitizeHTML(linkUrl)}" target="_blank" class="print-youtube-link">${sanitizeHTML(linkUrl)}</a>
+                                              </li>`;
+                      }
+                 });
+                 chapterListHTML += '</ul>';
+
+                 if (paperHasLinks) {
+                     subjectHasLinks = true;
+                     paperHTML += `<h3 class="print-paper-header">${sanitizeHTML(paper)}</h3>${chapterListHTML}`;
+                 }
+            });
+
+            if (subjectHasLinks) {
+                 foundLinks = true;
+                 printHTML += subjectHTML + paperHTML;
+            }
+        });
+
+        if (!foundLinks) {
+            printHTML += `<p class="print-no-links">কোনো ইউটিউব লিংক এখনো যুক্ত করা হয়নি।</p>`;
+        }
+
+        return printHTML;
+    }
+
+    function handlePrintAllLinks() {
+        if (!printableLinksArea) {
+            console.error("Printable area for links not found!");
+            return;
+        }
+        const linksHTML = generatePrintableLinksHTML();
+        printableLinksArea.innerHTML = linksHTML;
+        window.print(); // Trigger browser print dialog
+    }
+
+
+    /* ========== Statistics Summary (Unchanged) ========== */
+    function updateStatsSummary() { if (!statsSummaryContent) return; statsSummaryContent.innerHTML = '<i class="fas fa-spinner fa-spin mr-2 text-xl"></i> পরিসংখ্যান গণনা করা হচ্ছে...'; setTimeout(() => { let linkedPlaylistsCount = 0; try { for (let i = 0; i < localStorage.length; i++) { const key = localStorage.key(i); if (key && key.startsWith(PLAYLIST_STORAGE_KEY_PREFIX)) { const storedValue = safeGetItem(key); if (storedValue) { try { const parsed = JSON.parse(storedValue); if (parsed && (parsed.value || parsed.url || parsed.embedCode)) { linkedPlaylistsCount++; } } catch(e) {} } } } statsSummaryContent.innerHTML = `<i class="fas fa-link text-xl text-indigo-500 dark:text-indigo-400" aria-hidden="true"></i><span class="text-lg">মোট</span><span class="text-2xl font-bold text-indigo-600 dark:text-indigo-400">${linkedPlaylistsCount.toLocaleString('bn-BD')}</span><span class="ml-1 text-lg text-gray-700 dark:text-gray-300">টি অধ্যায়ের প্লে-লিস্ট যুক্ত করা হয়েছে।</span>`; } catch (e) { console.error("Error calculating stats:", e); statsSummaryContent.innerHTML = '<span class="text-red-500">পরিসংখ্যান লোড করতে সমস্যা হয়েছে।</span>'; } }, 100); }
+
+    /* ========= Event Listeners Setup ========= */
+    function setupEventListeners() {
+        themeToggleBtn?.addEventListener('click', toggleTheme);
+        viewToggleStudentBtn?.addEventListener('click', () => setViewMode(false));
+        viewToggleAdminBtn?.addEventListener('click', () => setViewMode(true));
+        sidebarMobileToggle?.addEventListener('click', () => setSidebarState(true));
+        sidebarMobileClose?.addEventListener('click', () => setSidebarState(false));
+        sidebarDesktopToggle?.addEventListener('click', toggleSidebar);
+        sidebarOverlay?.addEventListener('click', () => setSidebarState(false));
+        sidebarHeaderClickable?.addEventListener('click', displayWelcome);
+        subjectMenu?.addEventListener('click', (e) => { const link = e.target.closest('a[data-subject]'); if (link && subjectMenu.contains(link)) { e.preventDefault(); const subject = link.getAttribute('data-subject'); const listItem = link.parentElement; if (listItem && !listItem.classList.contains('active')) { setActiveSubject(listItem); renderSyllabus(subject); } if (isMobile()) { setSidebarState(false); } } });
+        addNoticeBtn?.addEventListener('click', (e) => openAdminNoticeModal(null, e.currentTarget));
+        printAllLinksBtn?.addEventListener('click', handlePrintAllLinks); // Updated Listener
+        modalCloseBtns.forEach(btn => btn.addEventListener('click', closeModal));
+        modalTemplate?.addEventListener('click', (e) => { if (e.target === modalTemplate) closeModal(); });
+        window.addEventListener('keydown', (e) => { if (e.key === 'Escape') { if (youtubeFullscreenOverlay && youtubeFullscreenOverlay.classList.contains('active')) { handleExitFullscreen(); } else if (modalTemplate && !modalTemplate.classList.contains('hidden')) { closeModal(); } } });
+        exitFullscreenBtn?.addEventListener('click', handleExitFullscreen);
+        const debouncedResizeHandler = debounce(loadSidebarState, 150); window.addEventListener('resize', debouncedResizeHandler);
+    }
+
+    /* ========= Initialize Application ========= */
+    initializeApp();
+    setupEventListeners();
+
+});
+</script>
+</body>
+</html>
